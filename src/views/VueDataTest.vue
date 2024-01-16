@@ -38,6 +38,32 @@
     </table>
 
   </div>
+  <br>
+  <br>
+
+  <div>
+    <h1>신청서 목록 조회</h1>
+    <table v-if="vueState.application" class="user-table">
+      <thead>
+      <tr>
+        <th>신청서 ID</th>
+        <th>이메일</th>
+        <th>유저 이름</th>
+        <th>제목</th>
+        <th>확인 여부</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(a, index) in vueState.application" :key="index">
+        <td>{{ a.applicationId }}</td>
+        <td>{{ a.email }}</td>
+        <td>{{ a.username }}</td>
+        <td>{{ a.title }}</td>
+        <td>{{ a.verified }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -48,7 +74,8 @@ export default {
   setup() {
     const vueState = reactive({
       user: null,
-      userList: null
+      userList: null,
+      application: null
     });
 
     const getUser = async () => {
@@ -73,9 +100,16 @@ export default {
       console.log(response.data.data)
     }
 
+    const getApplication = async () => {
+      const response = await axios.get('http://localhost:8080/api/v1/users/application')
+      vueState.application = response.data.data;
+      console.log(response.data)
+    }
+
     onMounted(async () => {
       await getUser()
       await getUserList()
+      await getApplication()
     })
     return {
       vueState
