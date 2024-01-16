@@ -64,6 +64,9 @@
       </tbody>
     </table>
   </div>
+  <router-link to="/inputTest">
+    <button>신청서 작성하기</button>
+  </router-link>
 </template>
 
 <script>
