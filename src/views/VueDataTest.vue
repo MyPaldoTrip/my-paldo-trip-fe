@@ -2,13 +2,6 @@
   <div>
     <br>
     <br>
-    <h1>유저 단건 조회</h1>
-    <p v-if="vueState.user">
-      {{ vueState.user }}
-    </p>
-    <br>
-    <br>
-
     <h1>유저 목록 조회</h1>
     <table v-if="vueState.userList" class="user-table">
       <thead>
@@ -24,7 +17,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(user, index) in vueState.userList.data" :key="index">
+      <tr v-for="(user, index) in vueState.userList.data" :key="index"
+          @click="getUser(user.userId)">
         <td>{{ user.userId }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.username }}</td>
@@ -37,6 +31,14 @@
       </tbody>
     </table>
 
+  </div>
+  <br>
+  <br>
+  <div>
+    <h1>유저 단건 조회</h1>
+    <p v-if="vueState.user">
+      {{ vueState.user }}
+    </p>
   </div>
   <br>
   <br>
@@ -81,8 +83,8 @@ export default {
       application: null
     });
 
-    const getUser = async () => {
-      const response = await axios.get('http://localhost:8080/api/v1/users/4')
+    const getUser = async (userId) => {
+      const response = await axios.get(`http://localhost:8080/api/v1/users/${userId}`)
       vueState.user = response.data.data;
       console.log(response.data.data)
     }
@@ -110,11 +112,11 @@ export default {
     }
 
     onMounted(async () => {
-      await getUser()
       await getUserList()
       await getApplication()
     })
     return {
+      getUser,
       vueState
     }
   },
@@ -133,5 +135,9 @@ export default {
 
 .user-table th {
   padding-left: 20px;
+}
+
+.user-table tr:hover {
+  background-color: #f5f5f5;
 }
 </style>
