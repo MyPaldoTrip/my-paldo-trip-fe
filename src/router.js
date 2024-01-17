@@ -5,6 +5,7 @@ import OutputTest from "./views/VueDataTest.vue"
 import InputTest from "./views/VueInputDataTest.vue"
 import signup from "./views/user/signupPage.vue"
 import deleteUser from "./views/user/deleteUser.vue"
+import loginUser from "./views/user/loginUser.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -14,7 +15,8 @@ const router = createRouter({
     {path: "/outputTest", component: OutputTest},
     {path: "/inputTest", component: InputTest},
     {path: "/signup", component: signup},
-    {path: "/deleteUser", component: deleteUser}
+    {path: "/deleteUser", component: deleteUser},
+    {path: "/login", component: loginUser}
   ]
 })
 
