@@ -9,8 +9,8 @@
       <br>
 
       <label>인증 코드</label>
-      <input type="text" v-model="postData.code" required/>
-      <button style="background-color: coral">인증 코드 검증</button>
+      <input type="text" v-model="code.code" required/>
+      <button type="button" @click="verifiedCode" style="background-color: coral">인증 코드 검증</button>
 
       <br>
       <label>username:</label>
@@ -37,6 +37,9 @@ export default {
       username: '',
       password: ''
     });
+    const code = reactive({
+      code: ''
+    })
 
     const submitForm = async () => {
       try {
@@ -60,9 +63,25 @@ export default {
       }
     }
 
+    const verifiedCode = async () => {
+      try {
+        const codeV = reactive({
+          email: postData.email,
+          code: code.code
+        })
+        const response = await axios.post('http://localhost:8080/api/v1/users/email/verify', codeV);
+        console.log(response.data);
+        alert("코드 검증 성공")
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     return {
+      verifiedCode,
       sendMail,
       postData,
+      code,
       submitForm
     }
   }
