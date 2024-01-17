@@ -9,6 +9,7 @@ import loginUser from "./views/user/loginUser.vue";
 import getUserList from "./views/user/getUserList.vue";
 import getUser from "@/views/user/getUser.vue";
 import updateUser from "@/views/user/updateUser.vue";
+import applicationSubmitForm from "@/views/user/applicationSubmitForm.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -22,7 +23,8 @@ const router = createRouter({
     {path: "/login", component: loginUser},
     {path: "/getUserList", component: getUserList},
     {path: "/getUser/:userId", component: getUser, name: 'getUser'},
-    {path: "/updateUser", component: updateUser}
+    {path: "/updateUser", component: updateUser},
+    {path: "/appSubmitForm", component: applicationSubmitForm}
   ]
 })
 
