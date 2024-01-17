@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div>
+      <br>
+      <h1 class="page-title">마이 팔도 트립</h1>
+    </div>
     <b-navbar toggleable="lg" type="dark" class="custom-nav">
       <b-navbar-brand href="#">NavBar</b-navbar-brand>
 
@@ -45,6 +49,13 @@ export default {
 </script>
 <style>
 .custom-nav {
-  background-color: bisque;
+  background-color: beige;
+}
+
+.page-title {
+  font-size: 3em; /* 글자 크기 */
+  font-family: 'Arial', sans-serif; /* 폰트 */
+  color: #333; /* 글자 색상 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, .5); /* 그림자 효과 */
 }
 </style>
