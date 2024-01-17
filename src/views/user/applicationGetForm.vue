@@ -10,6 +10,10 @@
         <li class="list-group-item">확인 여부: {{ vueState.application.verified }}</li>
       </ul>
     </div>
+    <br>
+    <button @click="confirm(true)" style="background-color: lightblue">승인</button>
+    <button @click="confirm(false)" style="background-color: pink">거절</button>
+    <br>
     <router-link to="/appListForm" class="btn btn-primary mt-4">신청서 목록으로</router-link>
     <router-link to="/" class="btn btn-secondary mt-4">홈으로</router-link>
   </div>
@@ -19,6 +23,7 @@
 import {reactive} from "vue";
 import axios from "axios";
 import {useRoute} from 'vue-router';
+import router from "@/router";
 
 export default {
   setup() {
@@ -33,9 +38,25 @@ export default {
       vueState.application = response.data.data;
       console.log(response.data.data)
     }
+    const confirm = async (isAccepted) => {
+      const confirmData = reactive({
+        applicationId: vueState.application.applicationId,
+        accept: isAccepted ? true : null
+      })
+      const res = await axios.patch('http://localhost:8080/api/v1/users/application', confirmData)
+      console.log(res.data)
+      if (confirmData.accept) {
+        alert(vueState.application.email + " 운영자로 변경")
+      } else {
+        alert(vueState.application.email + " 운영자 변경 거절")
+      }
+      router.push("/appListForm")
+    }
+
     getApplication()
     return {
-      vueState
+      confirm,
+      vueState,
     }
   }
 }
