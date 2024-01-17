@@ -8,6 +8,7 @@ import deleteUser from "./views/user/deleteUser.vue"
 import loginUser from "./views/user/loginUser.vue";
 import getUserList from "./views/user/getUserList.vue";
 import getUser from "@/views/user/getUser.vue";
+import updateUser from "@/views/user/updateUser.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,7 +21,8 @@ const router = createRouter({
     {path: "/deleteUser", component: deleteUser},
     {path: "/login", component: loginUser},
     {path: "/getUserList", component: getUserList},
-    {path: "/getUser/:userId", component: getUser, name: 'getUser'}
+    {path: "/getUser/:userId", component: getUser, name: 'getUser'},
+    {path: "/updateUser", component: updateUser}
   ]
 })
 

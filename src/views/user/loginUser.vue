@@ -30,7 +30,7 @@ export default {
         const response = await axios.post('http://localhost:8080/api/v1/users/login', postData);
         console.log(response.headers.authorization);
         const authorization = response.headers.getAuthorization();
-        localStorage.setItem('authorization', authorization)
+        localStorage.setItem('Authorization', authorization)
         alert(`response: ${response.data.message}`)
         router.push('/')
       } catch (error) {

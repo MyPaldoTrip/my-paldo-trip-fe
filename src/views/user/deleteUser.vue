@@ -13,7 +13,7 @@ export default {
     const deleteUser = async () => {
       try {
         const response = await axios.delete(`http://localhost:8080/api/v1/users`,
-            {headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYWc5NzMwMDBAZ21haWwuY29tIiwiZXhwIjoxNzA1NDYzODM3LCJpYXQiOjE3MDU0NjAyMzd9.DGCfCZqKDM1fdv8yR4mxvqgenqI3eG8mJm3sHp6xeuM'}})
+            {headers: {Authorization: localStorage.getItem('Authorization')}})
         vueState.res = response.data.data;
         console.log(response.data.data)
         alert(`response: ${response.data.data.message}`)
