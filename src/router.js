@@ -1,8 +1,8 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import VueHome from "./views/VueHome.vue";
-import VueAbout from "./views/VueAbout.vue";
-import OutputTest from "./views/VueDataTest.vue"
-import InputTest from "./views/VueInputDataTest.vue"
+import VueHome from "./views/sample/VueHome.vue";
+import VueAbout from "./views/sample/VueAbout.vue";
+import OutputTest from "./views/sample/VueDataTest.vue"
+import InputTest from "./views/sample/VueInputDataTest.vue"
 import signup from "./views/user/signupPage.vue"
 import deleteUser from "./views/user/deleteUser.vue"
 import loginUser from "./views/user/loginUser.vue";
