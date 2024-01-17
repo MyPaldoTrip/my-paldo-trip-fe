@@ -5,6 +5,14 @@
       <label>email:</label>
       <input type="text" v-model="postData.email" required/>
 
+      <button type="button" @click="sendMail" style="background-color: coral">이메일로 인증 코드 발송</button>
+      <br>
+
+      <label>인증 코드</label>
+      <input type="text" v-model="postData.code" required/>
+      <button style="background-color: coral">인증 코드 검증</button>
+
+      <br>
       <label>username:</label>
       <input type="text" v-model="postData.username" required/>
 
@@ -12,7 +20,7 @@
       <input type="text" v-model="postData.password" required/>
 
 
-      <button type="submit">Submit</button>
+      <button type="submit">회원 가입 하기</button>
     </form>
   </div>
 </template>
@@ -39,8 +47,21 @@ export default {
         console.error(error);
       }
     }
+    const sendMail = async () => {
+      try {
+        const emailAdd = reactive({
+          email: postData.email
+        })
+        const response = await axios.post('http://localhost:8080/api/v1/users/email', emailAdd);
+        console.log(response.data);
+        alert("인증 코드가 이메일로 발송 되었습니다.")
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     return {
+      sendMail,
       postData,
       submitForm
     }
