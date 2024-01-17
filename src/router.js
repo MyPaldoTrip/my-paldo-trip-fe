@@ -4,6 +4,7 @@ import VueAbout from "./views/VueAbout.vue";
 import OutputTest from "./views/VueDataTest.vue"
 import InputTest from "./views/VueInputDataTest.vue"
 import getCourse from "@/views/course/getCourse.vue";
+import getCourseList from "@/views/course/getCourseList.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,7 +14,7 @@ const router = createRouter({
     {path: "/outputTest", component: OutputTest},
     {path: "/inputTest", component: InputTest},
     // {path: "/courses", component: addCourse},
-    // {path: "/courses/list", component: getCourseList},
+    {path: "/courses/list", component: getCourseList},
     {path: "/courses/:courseId", component: getCourse}
 
   ]

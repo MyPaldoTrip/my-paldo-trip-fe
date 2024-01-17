@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="course">
     <h2>{{ course.title }}</h2>
     <p>코스 번호: {{ course.courseId }}</p>
     <p>작성자: {{ course.author }}</p>
