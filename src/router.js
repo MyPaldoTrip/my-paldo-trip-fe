@@ -11,6 +11,7 @@ import getUser from "@/views/user/getUser.vue";
 import updateUser from "@/views/user/updateUser.vue";
 import applicationSubmitForm from "@/views/user/applicationSubmitForm.vue";
 import applicationListForm from "@/views/user/applicationListForm.vue";
+import applicationGetForm from "@/views/user/applicationGetForm.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,7 +27,8 @@ const router = createRouter({
     {path: "/getUser/:userId", component: getUser, name: 'getUser'},
     {path: "/updateUser", component: updateUser},
     {path: "/appSubmitForm", component: applicationSubmitForm},
-    {path: "/appListForm", component: applicationListForm}
+    {path: "/appListForm", component: applicationListForm},
+    {path: "/appGetForm/:applicationId", component: applicationGetForm},
   ]
 })
 

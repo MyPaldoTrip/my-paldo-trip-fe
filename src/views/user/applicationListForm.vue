@@ -12,7 +12,9 @@
     <tbody>
     <tr v-for="(data, index) in getData.data" :key="index">
       <td>{{ data.applicationId }}</td>
-      <td>{{ data.email }}</td>
+      <router-link :to="`/appGetForm/${data.applicationId}`">
+        <td>{{ data.email }}</td>
+      </router-link>
       <td>{{ data.username }}</td>
       <td>{{ data.title }}</td>
       <td>{{ data.verified }}</td>
