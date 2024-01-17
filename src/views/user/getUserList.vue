@@ -54,14 +54,16 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(user, index) in vueState.userList.data" :key="index"
-          @click="getUser(user.userId)">
+      <tr v-for="(user, index) in vueState.userList.data" :key="index">
         <td>{{ user.userId }}</td>
-        <td>{{ user.email }}</td>
+        <router-link :to="`/getUser/${user.userId}`">
+          <td>{{ user.email }}</td>
+        </router-link>
         <td>{{ user.username }}</td>
         <td>{{ user.age }}</td>
         <td>{{ user.level }}</td>
         <td>{{ user.userRoleValue }}</td>
+
         <td>{{ user.writeReviewCnt }}</td>
         <td>{{ user.followerCnt }}</td>
         <td>{{ user.modified }}</td>
