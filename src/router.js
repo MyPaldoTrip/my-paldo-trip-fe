@@ -26,6 +26,7 @@ const router = createRouter({
     {path: "/courses/:courseId/update", component: updateCourse},
     {path: "/courses/:courseId/upload", component: uploadCourseFile},
     {path: "/courses/:courseId/delete", component: deleteCourse},
+    {path: "/courses/:courseId/files/delete", component: deleteFile},
 
   ]
 })
