@@ -6,6 +6,12 @@ import InputTest from "./views/VueInputDataTest.vue"
 import getCourse from "@/views/course/getCourse.vue";
 import getCourseList from "@/views/course/getCourseList.vue";
 import addCourse from "@/views/course/addCourse.vue";
+import updateCourse from "@/views/course/updateCourse.vue";
+import deleteCourse from "@/views/course/deleteCourse.vue";
+import uploadCourseFile from "@/views/course/uploadCourseFile.vue";
+import deleteFile from "@/views/course/deleteCourseFile.vue";
+import toggleLike from "@/views/like/toggleLike.vue";
+import addComment from "@/views/comment/addComment.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -17,6 +23,7 @@ const router = createRouter({
     {path: "/courses", component: addCourse},
     {path: "/courses/list", component: getCourseList},
     {path: "/courses/:courseId", component: getCourse}
+    {path: "/courses/:courseId/update", component: updateCourse},
 
   ]
 })
