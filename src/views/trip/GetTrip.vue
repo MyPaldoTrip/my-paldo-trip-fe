@@ -64,8 +64,18 @@ export default {
         return;
       }
 
-      // 삭제요청 로직
-
+      try {
+        await axios.delete(`http://localhost:8080/api/v1/trips/${vueState.trip.tripId}`, {
+          headers: {
+            'Authorization': localStorage.getItem('Authorization')
+          },
+        });
+        alert('여행정보가 삭제되었습니다.');
+        router.push('/getTripList')
+      } catch (error) {
+        alert(error.response.data.message);
+        console.error('There was an error deleting the trip', error);
+      }
     }
 
     onMounted(getTrip);
