@@ -2,8 +2,8 @@
   <div class="container">
     <div class="trip-info">
       <h1>{{ vueState.trip ? vueState.trip.name : '' }}</h1>
-      <p>{{ vueState.trip ? vueState.trip.city : '' }}</p>
-      <p>{{ vueState.trip ? vueState.trip.category : '' }}</p>
+      <p><strong>도시:</strong> {{ vueState.trip ? vueState.trip.city : '' }}</p>
+      <p><strong>카테고리:</strong> {{ vueState.trip ? categoryToKorean(vueState.trip.category) : '' }}</p>
       <p>{{ vueState.trip ? vueState.trip.description : '' }}</p>
       <div class="image-container">
         <div class="modal" v-if="vueState.selectedImage">
@@ -21,14 +21,37 @@
       <button @click="deleteTrip">삭제하기</button>
     </div>
     <div class="review">
-      <!--      후기가 들어갈 공간-->
+      <div class="filter-sort">
+        <label for="filterByFollowing">팔로우한 사용자만 보기:</label>
+        <input id="filterByFollowing" type="checkbox" v-model="vueState.reviewListReq.filterByFollowing"
+               @change="getReviewList">
+
+        <label for="reviewSort">정렬:</label>
+        <select id="reviewSort" v-model="vueState.reviewListReq.reviewSort" @change="getReviewList">
+          <option value="MODIFIED">수정 순</option>
+          <option value="RATING">평점 순</option>
+          <option value="LEVEL">유저 레벨 순</option>
+        </select>
+      </div>
+      <div v-for="review in vueState.reviews" :key="review.username + review.modifiedAt">
+        <div>
+          <strong>작성자:</strong> {{ review.username }}
+          <strong>레벨:</strong> {{ review.level }}
+        </div>
+        <div>
+          <strong>평점:</strong> {{ review.score }}
+        </div>
+        <div>
+          <strong>후기:</strong> {{ review.content }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, watch} from "vue";
 import {useRoute} from "vue-router";
 import router from "@/router";
 
@@ -38,22 +61,63 @@ export default {
       trip: null,
       error: null,
       selectedImage: null,
+      reviews: null,
+      reviewListReq: {
+        filterByFollowing: false,
+        reviewSort: 'MODIFIED',
+        page: 0,
+      }
     });
-
 
     const getTrip = async () => {
       const route = useRoute();
       const tripId = route.params.id;
+      vueState.tripId = tripId;
 
       try {
         const response = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}`)
         vueState.trip = response.data.data;
-        console.log('vueState.trip.tripId:', vueState.trip.tripId);
+        await getReviewList(tripId);
       } catch (error) {
         vueState.error = '여행 정보를 불러오는데 실패했습니다.';
         console.error('There was an error fetching the trip details:', error)
       }
     };
+
+    const categoryToKorean = (category) => {
+      switch (category) {
+        case 'ATTRACTION':
+          return '관광지';
+        case 'RESTAURANT':
+          return '맛집';
+        case 'FESTIVAL':
+          return '축제';
+        default:
+          return category;
+      }
+    };
+
+
+    const getReviewList = async () => {
+      if (vueState.reviewListReq.reviewSort === '') {
+        return;
+      }
+
+      try {
+        const response = await axios.post(`http://localhost:8080/api/v1/trips/${vueState.tripId}/reviews/lists`, vueState.reviewListReq, {
+          headers: {
+            'Authorization': localStorage.getItem('Authorization')
+          },
+        });
+        vueState.reviews = response.data.data;
+      } catch (error) {
+        alert(error.response.data.message);
+        console.error('There was an error fetching the review list:', error);
+      }
+    }
+
+    watch(() => [vueState.reviewListReq.filterByFollowing, vueState.reviewListReq.reviewSort], getReviewList);
+
 
     const updateTrip = () => {
       router.push(`/updateTrip/${vueState.trip.tripId}`);
@@ -82,12 +146,16 @@ export default {
 
     return {
       vueState,
+      categoryToKorean,
+      getReviewList,
       updateTrip,
       deleteTrip
     };
   },
 };
 </script>
+
+
 <style scoped>
 .container {
   width: 80%;
@@ -116,7 +184,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .modal-content {
@@ -162,6 +230,7 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .button-group button {
@@ -184,5 +253,32 @@ export default {
   padding: 20px;
   box-sizing: border-box;
   background-color: #f8f8f8;
+  margin-top: 20px;
 }
+
+.review > div {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #eee;
+}
+
+.review > div > div {
+  margin-bottom: 10px;
+}
+
+.review > div > div > strong {
+  display: inline-block;
+  width: 70px;
+}
+
+.review > div > div:nth-child(1),
+.review > div > div:nth-child(2) {
+  display: inline-block;
+}
+
 </style>
