@@ -22,8 +22,9 @@ const router = createRouter({
     {path: "/inputTest", component: InputTest},
     {path: "/courses", component: addCourse},
     {path: "/courses/list", component: getCourseList},
-    {path: "/courses/:courseId", component: getCourse}
+    {path: "/courses/:courseId", component: getCourse},
     {path: "/courses/:courseId/update", component: updateCourse},
+    {path: "/courses/:courseId/upload", component: uploadCourseFile},
     {path: "/courses/:courseId/delete", component: deleteCourse},
 
   ]
