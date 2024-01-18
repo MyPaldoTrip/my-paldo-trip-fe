@@ -20,29 +20,46 @@
       <button @click="updateTrip">수정하기</button>
       <button @click="deleteTrip">삭제하기</button>
     </div>
-    <div class="review">
-      <div class="filter-sort">
-        <label for="filterByFollowing">팔로우한 사용자만 보기:</label>
-        <input id="filterByFollowing" type="checkbox" v-model="vueState.reviewListReq.filterByFollowing"
-               @change="getReviewList">
 
-        <label for="reviewSort">정렬:</label>
-        <select id="reviewSort" v-model="vueState.reviewListReq.reviewSort" @change="getReviewList">
-          <option value="MODIFIED">수정 순</option>
-          <option value="RATING">평점 순</option>
-          <option value="LEVEL">유저 레벨 순</option>
+    <div class="reviews-section">
+      <div class="review-form">
+        <h5>후기</h5>
+        <textarea v-model="vueState.newReview.content" placeholder="후기를 작성해주세요."></textarea>
+        <select v-model="vueState.newReview.score" class="score-select">
+          <option disabled value="">평점을 선택해주세요</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
         </select>
+        <button @click="createReview">후기 등록</button>
       </div>
-      <div v-for="review in vueState.reviews" :key="review.username + review.modifiedAt">
-        <div>
-          <strong>작성자:</strong> {{ review.username }}
-          <strong>레벨:</strong> {{ review.level }}
+
+      <div class="review">
+        <div class="filter-sort">
+          <label for="filterByFollowing">팔로우한 사용자만 보기:</label>
+          <input id="filterByFollowing" type="checkbox" v-model="vueState.reviewListReq.filterByFollowing"
+                 @change="getReviewList">
+
+          <label for="reviewSort">정렬:</label>
+          <select id="reviewSort" v-model="vueState.reviewListReq.reviewSort" @change="getReviewList">
+            <option value="MODIFIED">수정 순</option>
+            <option value="RATING">평점 순</option>
+            <option value="LEVEL">유저 레벨 순</option>
+          </select>
         </div>
-        <div>
-          <strong>평점:</strong> {{ review.score }}
-        </div>
-        <div>
-          <strong>후기:</strong> {{ review.content }}
+        <div v-for="review in vueState.reviews" :key="review.username + review.modifiedAt">
+          <div>
+            <strong>작성자:</strong> {{ review.username }}
+            <strong>레벨:</strong> {{ review.level }}
+          </div>
+          <div>
+            <strong>평점:</strong> {{ review.score }}
+          </div>
+          <div>
+            <strong>후기:</strong> {{ review.content }}
+          </div>
         </div>
       </div>
     </div>
@@ -66,7 +83,11 @@ export default {
         filterByFollowing: false,
         reviewSort: 'MODIFIED',
         page: 0,
-      }
+      },
+      newReview: {
+        content: '',
+        score: null,
+      },
     });
 
     const getTrip = async () => {
@@ -118,6 +139,26 @@ export default {
 
     watch(() => [vueState.reviewListReq.filterByFollowing, vueState.reviewListReq.reviewSort], getReviewList);
 
+    const createReview = async () => {
+      if (!vueState.newReview.score || vueState.newReview.score < 1 || vueState.newReview.score > 5) {
+        alert('평점은 1에서 5 사이의 숫자를 입력해주세요.')
+        return;
+      }
+      try {
+        await axios.post(`http://localhost:8080/api/v1/trips/${vueState.trip.tripId}/reviews`, vueState.newReview, {
+          headers: {
+            'Authorization': localStorage.getItem('Authorization'),
+          },
+        });
+        vueState.newReview.content = '';
+        vueState.newReview.score = null;
+        getReviewList();
+      } catch (error) {
+        alert(error.response.data.message);
+        console.error('There was an error creating the review:', error);
+      }
+    };
+
 
     const updateTrip = () => {
       router.push(`/updateTrip/${vueState.trip.tripId}`);
@@ -149,7 +190,8 @@ export default {
       categoryToKorean,
       getReviewList,
       updateTrip,
-      deleteTrip
+      deleteTrip,
+      createReview,
     };
   },
 };
@@ -246,6 +288,60 @@ export default {
 
 .button-group button:hover {
   background-color: #0056b3;
+}
+
+.reviews-section {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  box-shadow: 0px 0px 10px #eee;
+  border-radius: 10px;
+}
+
+.review-form {
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 10px #eee;
+}
+
+.review-form textarea {
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.review-form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.review-form button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color .3s;
+  float: right;
+}
+
+.review-form button:hover {
+  background-color: #0056b3;
+}
+
+.score-select {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .review {
