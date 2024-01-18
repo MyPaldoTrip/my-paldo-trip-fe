@@ -14,12 +14,14 @@ import applicationListForm from "@/views/user/applicationListForm.vue";
 import applicationGetForm from "@/views/user/applicationGetForm.vue";
 import homePage from "@/assemble/HomePage.vue";
 import GetTripList from "./views/trip/GetTripList.vue";
+import GetTrip from "./views/trip/GetTrip.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {path: "/", component: homePage},
     {path: "/getTripList", component: GetTripList},
+    {path: "/getTrip/:id", component: GetTrip},
     {path: "/about", component: VueAbout, name: 'about'},
     {path: "/outputTest", component: OutputTest, name: 'test'},
     {path: "/inputTest", component: InputTest},
