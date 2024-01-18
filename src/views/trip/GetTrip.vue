@@ -46,9 +46,9 @@ export default {
       const tripId = route.params.id;
 
       try {
-        const response = await axios.post(`http://localhost:8080/api/v1/trips/${tripId}`)
-        // console.log(response.data);
+        const response = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}`)
         vueState.trip = response.data.data;
+        console.log('vueState.trip.tripId:', vueState.trip.tripId);
       } catch (error) {
         vueState.error = '여행 정보를 불러오는데 실패했습니다.';
         console.error('There was an error fetching the trip details:', error)
