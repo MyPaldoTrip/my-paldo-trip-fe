@@ -13,11 +13,13 @@ import applicationSubmitForm from "@/views/user/applicationSubmitForm.vue";
 import applicationListForm from "@/views/user/applicationListForm.vue";
 import applicationGetForm from "@/views/user/applicationGetForm.vue";
 import homePage from "@/assemble/HomePage.vue";
+import GetTripList from "./views/trip/GetTripList.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {path: "/", component: homePage},
+    {path: "/getTripList", component: GetTripList},
     {path: "/about", component: VueAbout, name: 'about'},
     {path: "/outputTest", component: OutputTest, name: 'test'},
     {path: "/inputTest", component: InputTest},
