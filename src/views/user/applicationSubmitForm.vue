@@ -31,8 +31,8 @@ export default {
 
     const submitForm = async () => {
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/users/application',
-            postData, {headers: {Authorization: localStorage.getItem('Authorization')}});
+        const response = await axios.post('/api/v1/users/application',
+            postData, {headers: {'Authorization': localStorage.getItem('Authorization')}});
         console.log(response.data);
         alert("신청이 완료되었습니다.")
         router.push('/')

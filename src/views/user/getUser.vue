@@ -29,7 +29,7 @@ export default {
     const route = useRoute(); // useRoute를 사용하여 현재 route 객체를 가져옵니다.
     const getUser = async () => {
       const userId = route.params.userId;
-      const response = await axios.get(`http://localhost:8080/api/v1/users/${userId}`)
+      const response = await axios.get(`/api/v1/users/${userId}`)
       vueState.user = response.data.data;
       console.log(response.data.data)
     }

@@ -34,7 +34,7 @@ export default {
     const getApplication = async () => {
       const applicationId = route.params.applicationId;
       const response = await axios.get(
-          `http://localhost:8080/api/v1/users/application/${applicationId}`)
+          `/api/v1/users/application/${applicationId}`)
       vueState.application = response.data.data;
       console.log(response.data.data)
     }
@@ -43,7 +43,7 @@ export default {
         applicationId: vueState.application.applicationId,
         accept: isAccepted ? true : null
       })
-      const res = await axios.patch('http://localhost:8080/api/v1/users/application', confirmData)
+      const res = await axios.patch('/api/v1/users/application', confirmData)
       console.log(res.data)
       if (confirmData.accept) {
         alert(vueState.application.email + " 운영자로 변경")

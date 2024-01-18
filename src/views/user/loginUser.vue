@@ -38,7 +38,7 @@ export default {
     });
     const submitForm = async () => {
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/users/login', postData);
+        const response = await axios.post('/api/v1/users/login', postData);
         console.log(response.headers.authorization);
         const authorization = response.headers.getAuthorization();
         localStorage.setItem('Authorization', authorization)

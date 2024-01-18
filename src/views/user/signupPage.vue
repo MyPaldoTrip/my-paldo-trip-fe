@@ -43,7 +43,7 @@ export default {
 
     const submitForm = async () => {
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/users/signup', postData);
+        const response = await axios.post('/api/v1/users/signup', postData);
         console.log(response.data);
         router.push('/')
       } catch (error) {
@@ -55,7 +55,7 @@ export default {
         const emailAdd = reactive({
           email: postData.email
         })
-        const response = await axios.post('http://localhost:8080/api/v1/users/email', emailAdd);
+        const response = await axios.post('/api/v1/users/email', emailAdd);
         console.log(response.data);
         alert("인증 코드가 이메일로 발송 되었습니다.")
       } catch (error) {
@@ -69,7 +69,7 @@ export default {
           email: postData.email,
           code: code.code
         })
-        const response = await axios.post('http://localhost:8080/api/v1/users/email/verify', codeV);
+        const response = await axios.post('/api/v1/users/email/verify', codeV);
         console.log(response.data);
         alert("코드 검증 성공")
       } catch (error) {

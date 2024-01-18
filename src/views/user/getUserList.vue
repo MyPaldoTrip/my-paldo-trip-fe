@@ -136,8 +136,8 @@ export default {
         "followerCondition": vueState.follower === true ? vueState.follower : null,
         "followingCondition": vueState.following === true ? vueState.following : null
       }
-      const response = await axios.post('http://localhost:8080/api/v1/users', data,
-          {headers: {Authorization: localStorage.getItem('Authorization')}})
+      const response = await axios.post('/api/v1/users', data,
+          {headers: {'Authorization': localStorage.getItem('Authorization')}})
       vueState.userList = response.data;
       console.log(response.data.data)
     }
