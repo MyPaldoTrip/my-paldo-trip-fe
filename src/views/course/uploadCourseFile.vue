@@ -11,6 +11,7 @@
 import {ref} from 'vue';
 import axios from 'axios';
 import {useRoute} from "vue-router";
+import router from "@/router";
 
 export default {
   setup() {
@@ -25,18 +26,19 @@ export default {
       const formData = new FormData();
       formData.append('multipartFile', file.value);
 
-      axios.post(`http://localhost:8080/api/v1/courses/${courseId}/files`, formData, {
+      axios.post(`/api/v1/courses/${courseId}/files`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
       .then(response => {
         console.log('Files added:', response.data);
+        alert('정상적으로 처리되었습니다')
+        router.push(`/courses/${courseId}`)
       })
       .catch(error => {
         console.error('Error:', error);
-        console.log(courseId)
-        console.log(file.value)
+        alert('error')
       });
     };
 
