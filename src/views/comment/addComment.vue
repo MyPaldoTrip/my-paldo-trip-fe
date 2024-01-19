@@ -17,10 +17,41 @@
       <h2>댓글 목록</h2>
       <div v-for="(comment, index) in comments" :key="index">
         <p> 댓글 ID : {{ comment.commentId }}</p>
+        <p> 작성자 : {{ comment.username }}</p>
         <p> 댓글 내용 : {{ comment.content }}</p>
         <button @click="selectComment(comment)">수정</button>
         <button @click="deleteComment(comment.commentId)">삭제</button>
       </div>
+    </div>
+  </div>
+  <div class="control-panel">
+    <label>
+      Size:
+      <select v-model="size">
+        <option value="5">5개씩 보기</option>
+        <option value="10">10개씩 보기</option>
+        <option value="15">15개씩 보기</option>
+        <option value="20">20개씩 보기</option>
+      </select>
+    </label>
+    <button v-for="pageNum in totalPages" :key="pageNum" @click="setPage(pageNum)">
+      {{ pageNum }}
+    </button>
+    <button @click="getCommentList">Search</button>
+  </div>
+  <div class="filter-panel">
+    <label>
+      Sort By:
+      <select v-model="searchReq.commentSort">
+        <option value="MODIFIED">최신순</option>
+        <option value="LEVEL">등급 높은순</option>
+      </select>
+    </label>
+    <div>
+      <button @click="toggleFollow">
+        <span v-if="searchReq.filterByFollowing">전체 유저 보기</span>
+        <span v-else>팔로우한 유저만 보기</span>
+      </button>
     </div>
   </div>
 </template>
@@ -33,20 +64,30 @@ import {useRoute} from "vue-router";
 export default {
   setup() {
     const route = useRoute();
-    const courseId = route.params.courseId; // 실제 코스 ID로 변경해야 합니다.
+    const courseId = route.params.courseId;
     const newComment = ref({text: ''});
     const comments = ref([]);
     const selectedComment = ref(null);
     const Authorization = localStorage.getItem('Authorization');
     const page = ref(1);
-    const size = ref(20);
-    // const totalPages = ref(5); // 총 페이지 수. 필요한 경우 이 값을 동적으로 업데이트하십시오.
+    const size = ref(10);
+    const totalPages = ref(5); // 총 페이지 수. 필요한 경우 이 값을 동적으로 업데이트하십시오.
     const searchReq = ref({
-      filterByFollowing: '',
-      CommentSort: ''
+      filterByFollowing: false,
+      commentSort: 'MODIFIED'
     });
+
+    const toggleFollow = () => {
+      searchReq.value.filterByFollowing = !searchReq.value.filterByFollowing;
+      getCommentList();
+    };
+
+    const setPage = (pageNum) => {
+      page.value = pageNum;
+      getCommentList();
+    };
     const saveComment = () => {
-      axios.post(`http://localhost:8080/api/v1/courses/${courseId}/comments`, newComment.value, {
+      axios.post(`/api/v1/courses/${courseId}/comments`, newComment.value, {
         headers: {'Authorization': Authorization}
       })
       .then(response => {
@@ -62,7 +103,7 @@ export default {
     };
 
     const getCommentList = () => {
-      axios.post(`http://localhost:8080/api/v1/courses/${courseId}/comments/list`, searchReq.value,
+      axios.post(`/api/v1/courses/${courseId}/comments/list`, searchReq.value,
           {
             params: {
               page: page.value - 1,
@@ -82,7 +123,7 @@ export default {
     };
 
     const updateComment = (commentId) => {
-      axios.put(`http://localhost:8080/api/v1/courses/${courseId}/comments/${commentId}`,
+      axios.put(`/api/v1/courses/${courseId}/comments/${commentId}`,
           selectedComment.value, {
             headers: {'Authorization': Authorization}
           })
@@ -94,7 +135,7 @@ export default {
     };
 
     const deleteComment = (commentId) => {
-      axios.delete(`http://localhost:8080/api/v1/courses/${courseId}/comments/${commentId}`,
+      axios.delete(`/api/v1/courses/${courseId}/comments/${commentId}`,
           {headers: {'Authorization': Authorization}})
       .then(response => {
         console.log('Comment Deleted:', response.data);
@@ -112,12 +153,15 @@ export default {
       selectedComment,
       page,
       size,
+      totalPages,
       searchReq,
       selectComment,
       saveComment,
       getCommentList,
       updateComment,
-      deleteComment
+      deleteComment,
+      toggleFollow,
+      setPage
     };
   }
 };
