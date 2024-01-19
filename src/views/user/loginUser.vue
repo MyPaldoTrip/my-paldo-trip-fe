@@ -13,6 +13,7 @@
     </form>
   </div>
 
+  <br>
   <div class="wrap">
     <div class="title">로그인</div>
     <a class="kakao"
@@ -23,6 +24,11 @@
     </a>
 
   </div>
+  <br>
+  <br>
+  <router-link to="/signup">
+    <b-button>회원가입</b-button>
+  </router-link>
 </template>
 
 <script>
