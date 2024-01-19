@@ -13,7 +13,7 @@ export default {
   methods: {
     deleteCourse() {
       const courseId = this.$route.params.courseId;
-      axios.delete(`http://localhost:8080/api/v1/courses/${courseId}`, {
+      axios.delete(`/api/v1/courses/${courseId}`, {
         headers: {
           Authorization: localStorage.getItem('Authorization')
         }
@@ -25,6 +25,7 @@ export default {
       })
       .catch(error => {
         console.error('Error:', error);
+        alert('error')
       });
     }
   }
