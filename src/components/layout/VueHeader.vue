@@ -1,46 +1,29 @@
 <template>
   <div>
-    <div>
-      <br>
-      <h1 class="page-title">마이 팔도 트립</h1>
-    </div>
-    <b-navbar toggleable="lg" type="dark" class="custom-nav">
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+    <b-navbar toggleable="lg" type="dark">
+      <b-navbar-brand href="/">
+        <img src="../../assets/마이팔도트립2.png" height="250" width="250" class="logo-image"/>
+        마이팔도트립
+      </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
-        </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-          </b-nav-form>
-
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
+          <b-nav-item href="/getTripList">여행정보</b-nav-item>
+          <b-nav-item href="/courses/list">코스</b-nav-item>
+          <b-nav-item href="/getUserList">유저 조회</b-nav-item>
+          <b-nav-item href="/about">도시 조회</b-nav-item>
+          <b-nav-item href="/appListForm">등업 신청</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
+      <b-navbar-nav>
+        <b-nav-item href="/" class="ml-auto">채팅</b-nav-item>
+        <b-nav-item href="/login" class="ml-auto">로그인</b-nav-item>
+      </b-navbar-nav>
     </b-navbar>
   </div>
+
 </template>
 <script>
 export default {
@@ -48,14 +31,41 @@ export default {
 };
 </script>
 <style>
-.custom-nav {
-  background-color: beige;
+.header-container {
+  display: flex;
+  align-items: center;
 }
 
-.page-title {
-  font-size: 3em; /* 글자 크기 */
-  font-family: 'Arial', sans-serif; /* 폰트 */
-  color: #333; /* 글자 색상 */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, .5); /* 그림자 효과 */
+.custom-nav {
+  background-color: lightgray;
+  width: 100%;
+}
+
+.text1 {
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  margin-right: 20px;
+  transition: color 0.5s ease;
+}
+
+.nav-item:hover {
+  font-size: 20px;
+  color: #007bff; /* 호버 색상 */
+}
+
+.logo-image {
+  height: 100px;
+  width: 120px;
+  margin-right: 20px;
 }
 </style>

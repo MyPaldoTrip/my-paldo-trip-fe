@@ -1,6 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
-import VueHome from "./views/VueHome.vue";
 import getCourse from "@/views/course/getCourse.vue";
 import getCourseList from "@/views/course/getCourseList.vue";
 import addCourse from "@/views/course/addCourse.vue";
@@ -29,7 +28,6 @@ import CreateTrip from "./views/trip/CreateTrip.vue";
 import UpdateTrip from "./views/trip/UpdateTrip.vue";
 import GetTripFileList from "./views/trip/getTripFileList.vue";
 
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -42,7 +40,7 @@ const router = createRouter({
     {path: "/courses/:courseId/delete", component: deleteCourse},
     {path: "/courses/:courseId/files/delete", component: deleteFile},
     {path: "/courses/:courseId/likes", component: toggleLike},
-    {path: "/courses/:courseId/comment", component: addComment}
+    {path: "/courses/:courseId/comment", component: addComment},
     {path: "/", component: homePage},
     {path: "/getTripList", component: GetTripList},
     {path: "/getTrip/:id", component: GetTrip},

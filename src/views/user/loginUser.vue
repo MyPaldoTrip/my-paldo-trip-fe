@@ -13,6 +13,7 @@
     </form>
   </div>
 
+  <br>
   <div class="wrap">
     <div class="title">로그인</div>
     <a class="kakao"
@@ -23,6 +24,11 @@
     </a>
 
   </div>
+  <br>
+  <br>
+  <router-link to="/signup">
+    <b-button>회원가입</b-button>
+  </router-link>
 </template>
 
 <script>
@@ -98,13 +104,11 @@ export default {
 }
 
 .wrap {
+  display: inline-block;
   width: 490px;
   padding: 40px 20px 20px 20px;
   background-color: #f5f6f7;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   border-radius: 30px;
   box-sizing: border-box;
 }
@@ -142,6 +146,15 @@ export default {
   align-items: center;
   font-size: 16px;
   padding-right: 60px;
+}
+
+.kakao_i {
+  background: url("../../assets/kakao_login_button.png") no-repeat;
+  width: 300px;
+  height: 100%;
+  background-size: 90%;
+  background-position: 50%;
+  margin: 0 20px;
 }
 
 a {
