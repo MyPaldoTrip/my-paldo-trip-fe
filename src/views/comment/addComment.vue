@@ -37,7 +37,7 @@ export default {
     const newComment = ref({text: ''});
     const comments = ref([]);
     const selectedComment = ref(null);
-    const Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTU4MTM1MywiaWF0IjoxNzA1NTc3NzUzfQ.AWygOY0TRrBg87jj4m1s7TH4Hpgix-dN4AFrzL7iE3k';
+    const Authorization = localStorage.getItem('Authorization');
     const page = ref(1);
     const size = ref(20);
     // const totalPages = ref(5); // 총 페이지 수. 필요한 경우 이 값을 동적으로 업데이트하십시오.

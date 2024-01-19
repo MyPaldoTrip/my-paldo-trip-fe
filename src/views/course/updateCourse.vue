@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import {ref} from 'vue';
+import {useRoute} from 'vue-router';
 import axios from 'axios';
 import router from "@/router";
 
@@ -19,14 +19,14 @@ export default {
     const route = useRoute();
     const courseId = route.params.courseId;
     const courseUpdateReq = ref({
-      title : '', content : ''
+      title: '', content: ''
     });
 
     const updateCourse = () => {
 
       axios.put(`http://localhost:8080/api/v1/courses/${courseId}`, courseUpdateReq.value, {
         headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTUwNjU4NiwiaWF0IjoxNzA1NTAyOTg2fQ.0KxLYiW09dEJv21PCQViBxClk9P34xpyjsw-ElcDmtA' // 실제 토큰 값으로 대체해야 합니다.
+          'Authorization': localStorage.getItem('Authorization')
         }
       })
       .then(response => {

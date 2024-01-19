@@ -50,7 +50,7 @@ export default {
       axios.post('http://localhost:8080/api/v1/courses', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTU0ODIxNSwiaWF0IjoxNzA1NTQ0NjE1fQ.9Giu9cE4odgcn9gn-3HnjpDbn7u3Wn3bohOzt1WTLO8'
+          'Authorization': localStorage.getItem('Authorization')
         }
 
       })

@@ -15,7 +15,7 @@ export default {
       const courseId = this.$route.params.courseId;
       axios.delete(`http://localhost:8080/api/v1/courses/${courseId}`, {
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTU0ODIxNSwiaWF0IjoxNzA1NTQ0NjE1fQ.9Giu9cE4odgcn9gn-3HnjpDbn7u3Wn3bohOzt1WTLO8' // 실제 토큰 값으로 대체해야 합니다.
+          Authorization: localStorage.getItem('Authorization')
         }
       })
       .then(response => {

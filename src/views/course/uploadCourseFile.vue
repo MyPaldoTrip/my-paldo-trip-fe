@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import axios from 'axios';
 import {useRoute} from "vue-router";
 
@@ -20,7 +20,6 @@ export default {
     const onFileChange = e => {
       file.value = e.target.files[0];
     };
-
 
     const addFiles = () => {
       const formData = new FormData();

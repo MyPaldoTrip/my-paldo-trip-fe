@@ -70,7 +70,6 @@ export default {
       courseSort: 'MODIFIED'
     });
 
-
     const setPage = (pageNum) => {
       page.value = pageNum;
       fetchCourses();
@@ -86,7 +85,7 @@ export default {
         params: {
           page: page.value - 1,
           size: size.value
-        },headers:{Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJlQGVtYWlsLmNvbSIsImV4cCI6MTcwNTYwNDA3MywiaWF0IjoxNzA1NjAwNDczfQ.sYKQN6UwJqrbkyiuArMl7BtNNgDvvYh3laxmxgwjsOM'}
+        }, headers: {Authorization: localStorage.getItem('Authorization')}
       })
       .then(response => {
         courses.value = response.data.data;
