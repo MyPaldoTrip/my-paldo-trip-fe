@@ -1,10 +1,11 @@
 <template>
+
   <div>
     <div class="course-card" v-for="course in courses" :key="course.id">
       <h3>
         <router-link :to="`/courses/${course.courseId}`">{{ course.title }}</router-link>
       </h3>
-      <p>{{ course.author }}</p>
+      <p>{{ course.username }}</p>
       <p>Course ID: {{ course.courseId }}</p>
     </div>
 
@@ -81,7 +82,7 @@ export default {
     };
 
     const fetchCourses = () => {
-      axios.post('http://localhost:8080/api/v1/courses/list', searchReq.value, {
+      axios.post('/api/v1/courses/list', searchReq.value, {
         params: {
           page: page.value - 1,
           size: size.value
@@ -94,6 +95,7 @@ export default {
       .catch(error => {
         console.error('Error:', error);
         console.log(searchReq)
+        alert('error')
       });
     };
 
