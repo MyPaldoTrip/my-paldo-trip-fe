@@ -31,7 +31,7 @@ import GetTripFileList from "./views/trip/getTripFileList.vue";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-
+    // Course
     {path: "/courses", component: addCourse},
     {path: "/courses/list", component: getCourseList},
     {path: "/courses/:courseId", component: getCourse},
@@ -39,8 +39,11 @@ const router = createRouter({
     {path: "/courses/:courseId/upload", component: uploadCourseFile},
     {path: "/courses/:courseId/delete", component: deleteCourse},
     {path: "/courses/:courseId/files/delete", component: deleteFile},
+    // like
     {path: "/courses/:courseId/likes", component: toggleLike},
+    // comment
     {path: "/courses/:courseId/comment", component: addComment},
+
     {path: "/", component: homePage},
     {path: "/getTripList", component: GetTripList},
     {path: "/getTrip/:id", component: GetTrip},
