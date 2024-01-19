@@ -60,6 +60,19 @@
           <div>
             <strong>후기:</strong> {{ review.content }}
           </div>
+          <button @click="openEditForm(review)">수정</button>
+          <div v-if="vueState.editingReview && vueState.editingReview.username === review.username && vueState.editingReview.modifiedAt === review.modifiedAt">
+            <textarea v-model="vueState.editingReview.content"></textarea>
+            <select v-model="vueState.editingReview.score">
+              <option disabled value="">평점을 선택해주세요</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+            <button @click="editReview">수정 완료</button>
+          </div>
         </div>
       </div>
     </div>
@@ -88,6 +101,7 @@ export default {
         content: '',
         score: null,
       },
+      editingReview: null,
     });
 
     const getTrip = async () => {
@@ -159,6 +173,24 @@ export default {
       }
     };
 
+    const openEditForm = (review) => {
+      vueState.editingReview = {...review};
+    };
+
+    const editReview = async () => {
+      try {
+        await  axios.patch(`http://localhost:8080/api/v1/trips/${vueState.trip.tripId}/reviews/${vueState.editingReview.reviewId}`, vueState.editingReview, {
+          headers: {
+            'Authorization': localStorage.getItem('Authorization'),
+          },
+        });
+        vueState.editingReview = null;
+        getReviewList();
+      } catch (error) {
+        alert(error.response.data.message);
+        console.error('There was an error updating the review:', error);
+      }
+    };
 
     const updateTrip = () => {
       router.push(`/updateTrip/${vueState.trip.tripId}`);
@@ -192,6 +224,8 @@ export default {
       updateTrip,
       deleteTrip,
       createReview,
+      openEditForm,
+      editReview,
     };
   },
 };
