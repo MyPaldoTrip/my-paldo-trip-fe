@@ -24,17 +24,19 @@ export default {
 
     const updateCourse = () => {
 
-      axios.put(`http://localhost:8080/api/v1/courses/${courseId}`, courseUpdateReq.value, {
+      axios.put(`/api/v1/courses/${courseId}`, courseUpdateReq.value, {
         headers: {
           'Authorization': localStorage.getItem('Authorization')
         }
       })
       .then(response => {
         console.log('Course updated:', response.data);
+        alert('정상적으로 처리되었습니다.')
         router.push(`/courses/${courseId}`);
       })
       .catch(error => {
         console.error('Error:', error);
+        alert(`Error : ${error.response.data.message}`)
       });
     };
 
