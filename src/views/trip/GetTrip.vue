@@ -61,6 +61,7 @@
             <strong>후기:</strong> {{ review.content }}
           </div>
           <button @click="openEditForm(review)">수정</button>
+          <button @click="deleteReview(review)">삭제</button>
           <div v-if="vueState.editingReview && vueState.editingReview.username === review.username && vueState.editingReview.modifiedAt === review.modifiedAt">
             <textarea v-model="vueState.editingReview.content"></textarea>
             <select v-model="vueState.editingReview.score">
@@ -192,6 +193,25 @@ export default {
       }
     };
 
+    const deleteReview = async (review) => {
+      if (!confirm('정말 삭제하시겠습니까?')) {
+        return;
+      }
+
+      try {
+        await axios.delete(`http://localhost:8080/api/v1/trips/${vueState.trip.tripId}/reviews/${review.reviewId}`, {
+          headers: {
+            'Authorization': localStorage.getItem('Authorization'),
+          },
+        });
+        getReviewList();
+        alert('후기가 삭제되었습니다.')
+      } catch (error) {
+        alert(error.response.data.message);
+        console.error('There was an error deleting the review', error);
+      }
+    }
+
     const updateTrip = () => {
       router.push(`/updateTrip/${vueState.trip.tripId}`);
     };
@@ -226,6 +246,7 @@ export default {
       createReview,
       openEditForm,
       editReview,
+      deleteReview,
     };
   },
 };
