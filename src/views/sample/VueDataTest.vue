@@ -84,7 +84,7 @@ export default {
     });
 
     const getUser = async (userId) => {
-      const response = await axios.get(`http://localhost:8080/api/v1/users/${userId}`)
+      const response = await axios.get(`/api/v1/users/${userId}`)
       vueState.user = response.data.data;
       console.log(response.data.data)
     }
@@ -100,13 +100,13 @@ export default {
         "followerCondition": null,
         "followingCondition": null
       }
-      const response = await axios.post('http://localhost:8080/api/v1/users', data)
+      const response = await axios.post('/api/v1/users', data)
       vueState.userList = response.data;
       console.log(response.data.data)
     }
 
     const getApplication = async () => {
-      const response = await axios.get('http://localhost:8080/api/v1/users/application')
+      const response = await axios.get('/api/v1/users/application')
       vueState.application = response.data.data;
       console.log(response.data)
     }

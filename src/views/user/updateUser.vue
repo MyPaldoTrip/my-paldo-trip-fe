@@ -29,7 +29,7 @@ export default {
       formData.append('multipartFile', postData.multipartFile); // 'file'은 서버에서 해당 파일을 받을 때 사용할 파라미터 이름입니다.
       formData.append('req', json);
       try {
-        const response = await axios.put('http://localhost:8080/api/v1/users', formData, {
+        const response = await axios.put('/api/v1/users', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': localStorage.getItem('Authorization')

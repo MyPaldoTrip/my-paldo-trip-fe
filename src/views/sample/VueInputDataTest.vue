@@ -27,9 +27,9 @@ export default {
 
     const submitForm = async () => {
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/users/application',
+        const response = await axios.post('/api/v1/users/application',
             postData,
-            {headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnYWc5NzMwMDBAZ21haWwuY29tIiwiZXhwIjoxNzA1NDM4Njc5LCJpYXQiOjE3MDU0MzUwNzl9.f2KeM4alUXBUgAaVon3vXZWp6Lh1e0jIB7KCelKJ16o'}});
+            {headers: {'Authorization': localStorage.getItem('Authorization')}});
         console.log(response.data);
         router.push('/outputTest')
       } catch (error) {
