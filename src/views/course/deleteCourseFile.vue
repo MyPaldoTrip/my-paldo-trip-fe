@@ -24,7 +24,7 @@ export default {
     const courseId = route.params.courseId;
     const Authorization = localStorage.getItem('Authorization');
     const fetchCourseFiles = () => {
-      axios.get(`http://localhost:8080/api/v1/courses/${courseId}/files`, {
+      axios.get(`/api/v1/courses/${courseId}/files`, {
         headers: {
           'Authorization': Authorization
         }
@@ -39,17 +39,19 @@ export default {
     };
 
     const deleteCourseFile = (fileId) => {
-      axios.delete(`http://localhost:8080/api/v1/courses/${courseId}/files/${fileId}`, {
+      axios.delete(`/api/v1/courses/${courseId}/files/${fileId}`, {
         headers: {
           'Authorization': Authorization
         }
       })
       .then(response => {
         console.log('File Deleted:', response.data);
+        alert('정상적으로 처리되었습니다.')
         fetchCourseFiles();
       })
       .catch(error => {
         console.error('Error:', error);
+        alert('error')
       });
     };
 
