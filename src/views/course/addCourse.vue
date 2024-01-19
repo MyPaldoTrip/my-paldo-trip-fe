@@ -47,7 +47,7 @@ export default {
       formData.append('saveJson', JSON.stringify(saveJson));
       formData.append('multipartFile', file.value);
 
-      axios.post('http://localhost:8080/api/v1/courses', formData, {
+      axios.post('/api/v1/courses', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': localStorage.getItem('Authorization')
@@ -56,10 +56,12 @@ export default {
       })
       .then(response => {
         console.log('Success:', response);
+        alert('정상적으로 처리되었습니다')
         router.push(`/courses/${response.data.data.courseId}`);
       })
       .catch(error => {
         console.error('Error:', error);
+        alert('error')
       });
     };
 
