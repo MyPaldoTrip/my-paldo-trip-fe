@@ -19,6 +19,7 @@
     <div class="button-group">
       <button @click="updateTrip">수정하기</button>
       <button @click="deleteTrip">삭제하기</button>
+      <button @click="managementFile">파일관리</button>
     </div>
 
     <div class="reviews-section">
@@ -235,6 +236,10 @@ export default {
       }
     }
 
+    const managementFile = () => {
+      router.push(`/getTrip/${vueState.trip.tripId}/fileList`)
+    };
+
     onMounted(getTrip);
 
     return {
@@ -247,6 +252,7 @@ export default {
       openEditForm,
       editReview,
       deleteReview,
+      managementFile,
     };
   },
 };
