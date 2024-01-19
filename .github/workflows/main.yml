@@ -30,5 +30,6 @@ jobs:
           # port: ${{ secrets.PORT }} # default : 22
           script: |
             cd ${{ secrets.MPT_WEB_PATH }} && git pull
+            nvm use 17.0.0
             npm install
             npm run build
