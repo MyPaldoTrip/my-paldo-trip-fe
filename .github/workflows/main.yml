@@ -26,7 +26,7 @@ jobs:
         with:
           host: ${{ secrets.MPT_HOST }}
           username: ${{ secrets.MPT_USERNAME }}
-          key: ${{ secrets.MPT_PRIVATE_KEY }}
+          password: ${{ secrets.MPT_PRIVATE_KEY }}
           # port: ${{ secrets.PORT }} # default : 22
           script: |
             cd ${{ secrets.MPT_WEB_PATH }} && git pull
