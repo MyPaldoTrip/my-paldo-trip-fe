@@ -1,5 +1,15 @@
 import {createRouter, createWebHistory} from 'vue-router'
-// import VueHome from "./views/sample/VueHome.vue";
+
+import VueHome from "./views/VueHome.vue";
+import getCourse from "@/views/course/getCourse.vue";
+import getCourseList from "@/views/course/getCourseList.vue";
+import addCourse from "@/views/course/addCourse.vue";
+import updateCourse from "@/views/course/updateCourse.vue";
+import deleteCourse from "@/views/course/deleteCourse.vue";
+import uploadCourseFile from "@/views/course/uploadCourseFile.vue";
+import deleteFile from "@/views/course/deleteCourseFile.vue";
+import toggleLike from "@/views/like/toggleLike.vue";
+import addComment from "@/views/comment/addComment.vue";
 import VueAbout from "./views/sample/VueAbout.vue";
 import OutputTest from "./views/sample/VueDataTest.vue"
 import InputTest from "./views/sample/VueInputDataTest.vue"
@@ -14,9 +24,20 @@ import applicationListForm from "@/views/user/applicationListForm.vue";
 import applicationGetForm from "@/views/user/applicationGetForm.vue";
 import homePage from "@/assemble/HomePage.vue";
 
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+
+    {path: "/courses", component: addCourse},
+    {path: "/courses/list", component: getCourseList},
+    {path: "/courses/:courseId", component: getCourse},
+    {path: "/courses/:courseId/update", component: updateCourse},
+    {path: "/courses/:courseId/upload", component: uploadCourseFile},
+    {path: "/courses/:courseId/delete", component: deleteCourse},
+    {path: "/courses/:courseId/files/delete", component: deleteFile},
+    {path: "/courses/:courseId/likes", component: toggleLike},
+    {path: "/courses/:courseId/comment", component: addComment}
     {path: "/", component: homePage},
     {path: "/about", component: VueAbout, name: 'about'},
     {path: "/outputTest", component: OutputTest, name: 'test'},
@@ -30,6 +51,7 @@ const router = createRouter({
     {path: "/appSubmitForm", component: applicationSubmitForm},
     {path: "/appListForm", component: applicationListForm},
     {path: "/appGetForm/:applicationId", component: applicationGetForm},
+
   ]
 })
 
