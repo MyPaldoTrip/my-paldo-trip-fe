@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h2>Course Files </h2>
+    <h2>첨부 파일 목록</h2>
     <ul>
 
       <li v-for="file in courseFiles" :key="file.id">
-        {{ file }}
-        <button @click="deleteCourseFile(file.CourseFileId)">Delete</button>
+        <img class="image" :src="file.FileURL" alt="여행지 이미지">
+        <button class="btn btn-outline-danger" @click="deleteCourseFile(file.CourseFileId)">Delete</button>
       </li>
     </ul>
   </div>
