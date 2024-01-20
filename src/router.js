@@ -27,6 +27,9 @@ import GetTrip from "./views/trip/GetTrip.vue";
 import CreateTrip from "./views/trip/CreateTrip.vue";
 import UpdateTrip from "./views/trip/UpdateTrip.vue";
 import GetTripFileList from "./views/trip/getTripFileList.vue";
+import SingleCoursePage from "@/assemble/SingleCoursePage.vue";
+import CourseUpdatePage from "@/assemble/CourseUpdatePage.vue";
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -39,6 +42,8 @@ const router = createRouter({
     {path: "/courses/:courseId/upload", component: uploadCourseFile},
     {path: "/courses/:courseId/delete", component: deleteCourse},
     {path: "/courses/:courseId/files/delete", component: deleteFile},
+    {path: "/courses/:courseId/test", component: SingleCoursePage},
+    {path: "/courses/:courseId/updatePage", component: CourseUpdatePage},
     // like
     {path: "/courses/:courseId/likes", component: toggleLike},
     // comment
