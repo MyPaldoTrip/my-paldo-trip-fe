@@ -20,7 +20,7 @@ const file = ref({});
 
 const getTripFile = async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}/files/${fileId}`, {
+    const response = await axios.get(`/api/v1/trips/${tripId}/files/${fileId}`, {
       headers: {
         'Authorization': localStorage.getItem('Authorization'),
       },
@@ -39,7 +39,7 @@ const deleteFile = async () => {
   }
 
   try {
-    await axios.delete(`http://localhost:8080/api/v1/trips/${tripId}/files/${fileId}`, {
+    await axios.delete(`/api/v1/trips/${tripId}/files/${fileId}`, {
       headers: {
         'Authorization': localStorage.getItem('Authorization'),
       },

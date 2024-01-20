@@ -71,7 +71,7 @@ const submitForm = async () => {
     }));
     formData.append('multipartFile', vueState.value.tripFile);
 
-    await axios.post('http://localhost:8080/api/v1/trips', formData, {
+    await axios.post('/api/v1/trips', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': localStorage.getItem('Authorization')

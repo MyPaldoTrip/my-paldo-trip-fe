@@ -44,7 +44,7 @@ const uploadFile = async (event) => {
 
 
   try {
-    const response = await axios.post(`http://localhost:8080/api/v1/trips/${tripId}/files`, formData, {
+    const response = await axios.post(`/api/v1/trips/${tripId}/files`, formData, {
       headers: {
         'Authorization': localStorage.getItem('Authorization'),
         'Content-Type': 'multipart/form-data'
@@ -61,7 +61,7 @@ const uploadFile = async (event) => {
 
 const getTripFileList = async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}/files`, {
+    const response = await axios.get(`/api/v1/trips/${tripId}/files`, {
       headers: {
         'Authorization': localStorage.getItem('Authorization'),
       },
