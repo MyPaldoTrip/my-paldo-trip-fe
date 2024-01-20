@@ -30,7 +30,7 @@ jobs:
           # port: ${{ secrets.PORT }} # default : 22
           script: |
             cd ${{ secrets.MPT_WEB_PATH }}
-            git reset --hard
+            sudo rm -rf /dist
             git pull
             source ~/.nvm/nvm.sh
             nvm use 17.0.0
