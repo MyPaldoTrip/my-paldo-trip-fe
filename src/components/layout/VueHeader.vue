@@ -13,7 +13,7 @@
           <b-nav-item href="/getTripList">여행정보</b-nav-item>
           <b-nav-item href="/courses/list">코스</b-nav-item>
           <b-nav-item href="/getUserList">유저 조회</b-nav-item>
-          <b-nav-item href="/about">도시 조회</b-nav-item>
+          <b-nav-item href="/cities/list">도시 조회</b-nav-item>
           <b-nav-item href="/appListForm">등업 신청</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
