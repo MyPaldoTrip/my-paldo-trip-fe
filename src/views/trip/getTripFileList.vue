@@ -3,7 +3,9 @@
     <h2>파일 목록</h2>
     <ul class="image-list">
       <li v-for="file in tripFileList" :key="file.tripFileId" class="image-item">
-        <img :src="file.fileUrl" alt="trip file">
+        <router-link :to="`/getTrip/${tripId}/files/${file.tripFileId}`">
+          <img :src="file.fileUrl" alt="trip file">
+        </router-link>
       </li>
     </ul>
   </div>
@@ -18,21 +20,21 @@ const route = useRoute();
 const tripId = route.params.id;
 const tripFileList = reactive([]);
 
-    const getTripFileList = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}/files`, {
-          headers: {
-            'Authorization': localStorage.getItem('Authorization'),
-          },
-        });
+const getTripFileList = async () => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}/files`, {
+      headers: {
+        'Authorization': localStorage.getItem('Authorization'),
+      },
+    });
 
-        tripFileList.push(...response.data.data);
-      } catch (error) {
-        console.error('There was an error getting the trip file list:', error);
-      }
-    };
+    tripFileList.push(...response.data.data);
+  } catch (error) {
+    console.error('There was an error getting the trip file list:', error);
+  }
+};
 
-    onMounted(getTripFileList);
+onMounted(getTripFileList);
 </script>
 
 

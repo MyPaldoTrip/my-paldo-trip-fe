@@ -27,6 +27,7 @@ import GetTrip from "./views/trip/GetTrip.vue";
 import CreateTrip from "./views/trip/CreateTrip.vue";
 import UpdateTrip from "./views/trip/UpdateTrip.vue";
 import GetTripFileList from "./views/trip/getTripFileList.vue";
+import GetTripFile from "./views/trip/getTripFile.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -47,6 +48,7 @@ const router = createRouter({
     {path: "/createTrip", component: CreateTrip},
     {path: "/updateTrip/:id", component: UpdateTrip},
     {path: "/getTrip/:id/fileList", component: GetTripFileList},
+    {path: "/getTrip/:tripId/files/:fileId", component: GetTripFile},
     {path: "/about", component: VueAbout, name: 'about'},
     {path: "/outputTest", component: OutputTest, name: 'test'},
     {path: "/inputTest", component: InputTest},
