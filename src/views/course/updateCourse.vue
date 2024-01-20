@@ -1,10 +1,14 @@
 <template>
   <div>
-    <form @submit.prevent="updateCourse">
-      <input type="text" v-model="courseUpdateReq.title" placeholder="Title">
-      <input type="text" v-model="courseUpdateReq.content" placeholder="Content">
-      <button type="submit">Update</button>
-    </form>
+    <div class="mb-3">
+      <label class="form-label">수정할 제목</label>
+      <input type="text" v-model="courseUpdateReq.title" class="form-control" placeholder="">
+    </div>
+    <div @submit.prevent="updateCourse" class="mb-3">
+      <label class="form-label">수정할 내용</label>
+      <textarea class="form-control" v-model="courseUpdateReq.content" rows="30"></textarea>
+      <button class="btn btn-outline-warning" type="submit" @click="updateCourse" >Update</button>
+    </div>
   </div>
 </template>
 
@@ -32,7 +36,7 @@ export default {
       .then(response => {
         console.log('Course updated:', response.data);
         alert('정상적으로 처리되었습니다.')
-        router.push(`/courses/${courseId}`);
+        router.push(`/courses/${courseId}/test`);
       })
       .catch(error => {
         console.error('Error:', error);
