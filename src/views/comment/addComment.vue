@@ -1,28 +1,72 @@
 <template>
   <div>
-    <!-- 댓글 작성 -->
-    <div>
-      <h2>댓글 작성</h2>
-      <input v-model="newComment.content" placeholder="댓글을 입력하세요."/>
-      <button @click="saveComment">작성</button>
-    </div>
-    <!-- 댓글 수정 -->
-    <div v-if="selectedComment">
-      <h2>댓글 수정</h2>
-      <input v-model="selectedComment.content" placeholder="수정할 내용을 입력하세요."/>
-      <button @click="updateComment(selectedComment.commentId)">수정 완료</button>
+    <div v-if="selectedComment" class="input-group mb-3">
+      <h4>댓글 수정</h4>
+      <input type="text" v-model="selectedComment.content" class="form-control"
+             placeholder="수정할 내용을 입력하세요." aria-label="Comment"
+             aria-describedby="button-addon2">
+      <button class="btn btn-outline-info" @click="updateComment(selectedComment.commentId)"
+              type="button" id="button-addon2">수정완료
+      </button>
+      <br>
+      <br>
     </div>
     <!-- 댓글 목록 -->
-    <div>
+
       <h2>댓글 목록</h2>
       <div v-for="(comment, index) in comments" :key="index">
-        <p> 댓글 ID : {{ comment.commentId }}</p>
-        <p> 댓글 내용 : {{ comment.content }}</p>
-        <button @click="selectComment(comment)">수정</button>
-        <button @click="deleteComment(comment.commentId)">삭제</button>
+        <div class="comment">
+        <a class="list-group-item list-group-item-action list-group-item-primary">작성자 :
+          {{ comment.username }}</a>
+        <a class="list-group-item list-group-item-action list-group-item-info">댓글내용 :
+          {{ comment.content }}</a>
+        </div>
+        <button type="button" class="btn btn-outline-warning" @click="selectComment(comment)">수정
+        </button>
+        <button type="button" class="btn btn-outline-danger"
+                @click="deleteComment(comment.commentId)">삭제
+        </button>
       </div>
+
+  </div>
+  <div>
+    <input type="text" v-model="newComment.content" class="form-control"
+           placeholder="댓글을 입력하세요." aria-label="Comment"
+           aria-describedby="button-addon2">
+    <button class="btn btn-outline-primary" @click="saveComment"
+            type="button" id="button-addon2">댓글 등록</button>
+  </div>
+
+  <div class="control-panel">
+    <label>
+      <select class="form-select" v-model="size" @change="getCommentList">
+        <option value="5">5개씩 보기</option>
+        <option value="10">10개씩 보기</option>
+        <option value="15">15개씩 보기</option>
+        <option value="20">20개씩 보기</option>
+      </select>
+    </label>
+    <div class="filter-panel">
+      <label>
+        <select class="form-select" v-model="searchReq.commentSort" @change="getCommentList">
+          <option value="MODIFIED">최신순</option>
+          <option value="LEVEL">등급 높은순</option>
+        </select>
+      </label>
+    </div>
+
+    <button type="button" class="btn btn-outline-info" v-for="pageNum in totalPages" :key="pageNum"
+            @click="setPage(pageNum)">
+      {{ pageNum }}
+    </button>
+    <div>
+      <button type="button" class="btn btn-outline-info" @click="toggleFollow">
+        <span v-if="searchReq.filterByFollowing">전체 유저 보기</span>
+        <span v-else>팔로우한 유저만 보기</span>
+      </button>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -33,20 +77,30 @@ import {useRoute} from "vue-router";
 export default {
   setup() {
     const route = useRoute();
-    const courseId = route.params.courseId; // 실제 코스 ID로 변경해야 합니다.
+    const courseId = route.params.courseId;
     const newComment = ref({text: ''});
     const comments = ref([]);
     const selectedComment = ref(null);
-    const Authorization = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTU4MTM1MywiaWF0IjoxNzA1NTc3NzUzfQ.AWygOY0TRrBg87jj4m1s7TH4Hpgix-dN4AFrzL7iE3k';
+    const Authorization = localStorage.getItem('Authorization');
     const page = ref(1);
-    const size = ref(20);
-    // const totalPages = ref(5); // 총 페이지 수. 필요한 경우 이 값을 동적으로 업데이트하십시오.
+    const size = ref(10);
+    const totalPages = ref(5); // 총 페이지 수. 필요한 경우 이 값을 동적으로 업데이트하십시오.
     const searchReq = ref({
-      filterByFollowing: '',
-      CommentSort: ''
+      filterByFollowing: false,
+      commentSort: 'MODIFIED'
     });
+
+    const toggleFollow = () => {
+      searchReq.value.filterByFollowing = !searchReq.value.filterByFollowing;
+      getCommentList();
+    };
+
+    const setPage = (pageNum) => {
+      page.value = pageNum;
+      getCommentList();
+    };
     const saveComment = () => {
-      axios.post(`http://localhost:8080/api/v1/courses/${courseId}/comments`, newComment.value, {
+      axios.post(`/api/v1/courses/${courseId}/comments`, newComment.value, {
         headers: {'Authorization': Authorization}
       })
       .then(response => {
@@ -62,7 +116,7 @@ export default {
     };
 
     const getCommentList = () => {
-      axios.post(`http://localhost:8080/api/v1/courses/${courseId}/comments/list`, searchReq.value,
+      axios.post(`/api/v1/courses/${courseId}/comments/list`, searchReq.value,
           {
             params: {
               page: page.value - 1,
@@ -73,6 +127,7 @@ export default {
       .then(response => {
         console.log('Comments:', response.data.data);
         comments.value = response.data.data;
+        totalPages.value = response.data.data[0].totalPage;
       })
       .catch(error => console.error('Error:', error));
     };
@@ -82,7 +137,7 @@ export default {
     };
 
     const updateComment = (commentId) => {
-      axios.put(`http://localhost:8080/api/v1/courses/${courseId}/comments/${commentId}`,
+      axios.put(`/api/v1/courses/${courseId}/comments/${commentId}`,
           selectedComment.value, {
             headers: {'Authorization': Authorization}
           })
@@ -90,17 +145,25 @@ export default {
         console.log('Comment Updated:', response.data);
         window.location.reload();
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        console.error('Error:', error);
+        alert('권한이 없습니다.')
+      });
     };
 
     const deleteComment = (commentId) => {
-      axios.delete(`http://localhost:8080/api/v1/courses/${courseId}/comments/${commentId}`,
+      axios.delete(`/api/v1/courses/${courseId}/comments/${commentId}`,
           {headers: {'Authorization': Authorization}})
       .then(response => {
         console.log('Comment Deleted:', response.data);
+        alert('삭제되었습니다.')
         getCommentList();
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error =>{
+          console.error('Error:', error);
+        alert('권한이 없습니다');}
+      );
+
     };
 
     // 컴포넌트가 마운트 되면 댓글 목록을 불러옵니다.
@@ -112,13 +175,34 @@ export default {
       selectedComment,
       page,
       size,
+      totalPages,
       searchReq,
       selectComment,
       saveComment,
       getCommentList,
       updateComment,
-      deleteComment
+      deleteComment,
+      toggleFollow,
+      setPage
     };
   }
 };
 </script>
+
+<style scoped>
+.btn {
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.form-select {
+  margin-bottom: 10px;
+}
+.form-control{
+  width: 25%;
+  margin-left: 38%;
+}
+.comment{
+  font-size: 25px;
+}
+</style>

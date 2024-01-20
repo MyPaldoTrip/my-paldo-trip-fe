@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="deleteCourse">Delete</button>
+    <button type="button" class="btn btn-outline-danger" @click="deleteCourse">코스 삭제</button>
   </div>
 </template>
 
@@ -13,9 +13,9 @@ export default {
   methods: {
     deleteCourse() {
       const courseId = this.$route.params.courseId;
-      axios.delete(`http://localhost:8080/api/v1/courses/${courseId}`, {
+      axios.delete(`/api/v1/courses/${courseId}`, {
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTU0ODIxNSwiaWF0IjoxNzA1NTQ0NjE1fQ.9Giu9cE4odgcn9gn-3HnjpDbn7u3Wn3bohOzt1WTLO8' // 실제 토큰 값으로 대체해야 합니다.
+          Authorization: localStorage.getItem('Authorization')
         }
       })
       .then(response => {
@@ -25,8 +25,16 @@ export default {
       })
       .catch(error => {
         console.error('Error:', error);
+        alert('error')
       });
     }
   }
 };
 </script>
+<style scoped>
+.btn{
+  float: right;
+  margin-right: 21%;
+  margin-right: 21%;
+}
+</style>
