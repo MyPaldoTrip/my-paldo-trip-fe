@@ -1,18 +1,32 @@
 <template>
   <div v-if="course">
-    <h2>{{ course.title }}</h2>
-    <p>코스 번호: {{ course.courseId }}</p>
-    <p>작성자: {{ course.author }}</p>
-    <p>내용: {{ course.content }}</p>
-    <div v-for="(url, index) in course.fileURL" :key="index">
-      <p>파일 URL: <a :href="url" target="_blank">{{ url }}</a></p>
+    <div class="body">
+      <div class="container">
+        <div class="post">
+          <h1 class="title">{{ course.title }}</h1>
+          <p class="date">{{ course.createdAt.substr(0, 10) }}</p>
+          <div v-for="(url, index) in course.fileURL" :key="index">
+            <img class="image" :src="url" alt="여행지 이미지">
+          </div>
+          <div class="content">
+            <p>{{ course.content }}</p>
+          </div>
+        </div>
+      </div>
     </div>
 
+  <div>
+    <button type="button" @click="router().push(`/courses/${course.courseId}/updatePage`)" class="btn btn-outline-warning">
+      코스 수정
+    </button>
   </div>
+  </div>
+
 </template>
 
 <script>
 import axios from 'axios';
+import router from "@/router";
 
 export default {
   data() {
@@ -21,15 +35,19 @@ export default {
     };
   },
   methods: {
+    router() {
+      return router
+    },
     fetchCourse() {
       const courseId = this.$route.params.courseId;
-      axios.get(`http://localhost:8080/api/v1/courses/${courseId}`)
+      axios.get(`/api/v1/courses/${courseId}`)
       .then(response => {
         console.log(response.data)
         this.course = response.data.data;
       })
       .catch(error => {
         console.error('Error:', error);
+        alert('error')
       });
     }
   },
@@ -38,3 +56,58 @@ export default {
   }
 };
 </script>
+<style scoped>
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: #88ceff;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 5% 2%;
+}
+
+.post {
+  background: #bee0ff;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 2em;
+}
+
+.title {
+  font-size: 4em;
+  margin-bottom: 0.5em;
+  color: #001767;
+}
+
+.date {
+  color: #888;
+  margin-bottom: 1em;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  margin-bottom: 1em;
+}
+
+.content {
+  line-height: 2;
+
+}
+
+.content > p {
+  margin-bottom: 1em;
+  font-size: 30px;
+}
+
+.btn {
+  float: right;
+  margin-right: 21%;
+}
+</style>
