@@ -22,11 +22,17 @@ import applicationSubmitForm from "@/views/user/applicationSubmitForm.vue";
 import applicationListForm from "@/views/user/applicationListForm.vue";
 import applicationGetForm from "@/views/user/applicationGetForm.vue";
 import homePage from "@/assemble/HomePage.vue";
+import createCity from "@/views/city/createCity.vue";
+import deleteCity from "@/views/city/deleteCity.vue";
+import uploadCityFile from "@/views/city/uploadCityFile.vue";
+import updateCity from "@/views/city/updateCity.vue";
+import getProvinceList from "@/views/city/getProvinceList.vue";
 import GetTripList from "./views/trip/GetTripList.vue";
 import GetTrip from "./views/trip/GetTrip.vue";
 import CreateTrip from "./views/trip/CreateTrip.vue";
 import UpdateTrip from "./views/trip/UpdateTrip.vue";
 import GetTripFileList from "./views/trip/getTripFileList.vue";
+import getTripCourse from "@/views/city/getTripCourse.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -59,6 +65,12 @@ const router = createRouter({
     {path: "/appSubmitForm", component: applicationSubmitForm},
     {path: "/appListForm", component: applicationListForm},
     {path: "/appGetForm/:applicationId", component: applicationGetForm},
+    {path: "/cities", component: createCity},
+    {path: "/cities/:cityId/update", component: updateCity},
+    {path: "/cities/:cityId/delete", component: deleteCity},
+    {path: "/cities/:cityId/upload", component: uploadCityFile},
+    {path: "/cities/list", component: getProvinceList},
+    {path: "/getTripCourse/:cityName", component: getTripCourse},
 
   ]
 })
