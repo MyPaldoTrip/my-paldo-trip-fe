@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="deleteCourse">Delete</button>
+    <button type="button" class="btn btn-outline-danger" @click="deleteCourse">코스 삭제</button>
   </div>
 </template>
 
@@ -31,3 +31,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+.btn{
+  float: right;
+  margin-right: 21%;
+  margin-right: 21%;
+}
+</style>
