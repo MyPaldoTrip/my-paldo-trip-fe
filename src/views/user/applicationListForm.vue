@@ -1,5 +1,5 @@
 <template>
-  <table v-if="getData.data" class="user-table">
+  <table class="user-table">
     <thead>
     <tr>
       <th>신청서 ID</th>
@@ -9,7 +9,7 @@
       <th>확인 여부</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody v-if="getData.data">
     <tr v-for="(data, index) in getData.data" :key="index">
       <td>{{ data.applicationId }}</td>
       <router-link :to="`/appGetForm/${data.applicationId}`">
@@ -21,6 +21,10 @@
     </tr>
     </tbody>
   </table>
+
+  <router-link to="/appSubmitForm">
+    <button>작성하기</button>
+  </router-link>
 </template>
 
 <script>
