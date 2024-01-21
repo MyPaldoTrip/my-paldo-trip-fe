@@ -1,30 +1,32 @@
 <template>
   <div>
-    <h2>Course Files </h2>
+    <h2>첨부 파일 목록</h2>
     <ul>
 
       <li v-for="file in courseFiles" :key="file.id">
-        {{ file }}
-        <button @click="deleteCourseFile(file.CourseFileId)">Delete</button>
+        <img class="image" :src="file.FileURL" alt="여행지 이미지">
+        <button class="btn btn-outline-danger" @click="deleteCourseFile(file.CourseFileId)">Delete</button>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
-import { useRoute } from 'vue-router';
+import {useRoute} from 'vue-router';
+
 export default {
   props: ['courseId'],
   setup() {
     const route = useRoute();
     const courseFiles = ref([]);
     const courseId = route.params.courseId;
+    const Authorization = localStorage.getItem('Authorization');
     const fetchCourseFiles = () => {
-      axios.get(`http://localhost:8080/api/v1/courses/${courseId}/files`, {
+      axios.get(`/api/v1/courses/${courseId}/files`, {
         headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTU2MTUxMywiaWF0IjoxNzA1NTU3OTEzfQ.z3b3nxTFUQBUxzm2VeDD4JsMMJKhIUbrgiavc0WhsQs' // 실제 토큰 값으로 대체해야 합니다.
+          'Authorization': Authorization
         }
       })
       .then(response => {
@@ -37,17 +39,19 @@ export default {
     };
 
     const deleteCourseFile = (fileId) => {
-      axios.delete(`http://localhost:8080/api/v1/courses/${courseId}/files/${fileId}`, {
+      axios.delete(`/api/v1/courses/${courseId}/files/${fileId}`, {
         headers: {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTU2MTUxMywiaWF0IjoxNzA1NTU3OTEzfQ.z3b3nxTFUQBUxzm2VeDD4JsMMJKhIUbrgiavc0WhsQs' // 실제 토큰 값으로 대체해야 합니다.
+          'Authorization': Authorization
         }
       })
       .then(response => {
         console.log('File Deleted:', response.data);
+        alert('정상적으로 처리되었습니다.')
         fetchCourseFiles();
       })
       .catch(error => {
         console.error('Error:', error);
+        alert('error')
       });
     };
 

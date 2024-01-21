@@ -22,17 +22,25 @@ import applicationSubmitForm from "@/views/user/applicationSubmitForm.vue";
 import applicationListForm from "@/views/user/applicationListForm.vue";
 import applicationGetForm from "@/views/user/applicationGetForm.vue";
 import homePage from "@/assemble/HomePage.vue";
+import createCity from "@/views/city/createCity.vue";
+import deleteCity from "@/views/city/deleteCity.vue";
+import uploadCityFile from "@/views/city/uploadCityFile.vue";
+import updateCity from "@/views/city/updateCity.vue";
+import getProvinceList from "@/views/city/getProvinceList.vue";
 import GetTripList from "./views/trip/GetTripList.vue";
 import GetTrip from "./views/trip/GetTrip.vue";
 import CreateTrip from "./views/trip/CreateTrip.vue";
 import UpdateTrip from "./views/trip/UpdateTrip.vue";
 import GetTripFileList from "./views/trip/getTripFileList.vue";
 import GetTripFile from "./views/trip/getTripFile.vue";
+import getTripCourse from "@/views/city/getTripCourse.vue";
+import SingleCoursePage from "@/assemble/SingleCoursePage.vue";
+import CourseUpdatePage from "@/assemble/CourseUpdatePage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-
+    // Course
     {path: "/courses", component: addCourse},
     {path: "/courses/list", component: getCourseList},
     {path: "/courses/:courseId", component: getCourse},
@@ -40,8 +48,13 @@ const router = createRouter({
     {path: "/courses/:courseId/upload", component: uploadCourseFile},
     {path: "/courses/:courseId/delete", component: deleteCourse},
     {path: "/courses/:courseId/files/delete", component: deleteFile},
+    {path: "/courses/:courseId/test", component: SingleCoursePage},
+    {path: "/courses/:courseId/updatePage", component: CourseUpdatePage},
+    // like
     {path: "/courses/:courseId/likes", component: toggleLike},
+    // comment
     {path: "/courses/:courseId/comment", component: addComment},
+
     {path: "/", component: homePage},
     {path: "/getTripList", component: GetTripList},
     {path: "/getTrip/:id", component: GetTrip},
@@ -61,6 +74,12 @@ const router = createRouter({
     {path: "/appSubmitForm", component: applicationSubmitForm},
     {path: "/appListForm", component: applicationListForm},
     {path: "/appGetForm/:applicationId", component: applicationGetForm},
+    {path: "/cities", component: createCity},
+    {path: "/cities/:cityId/update", component: updateCity},
+    {path: "/cities/:cityId/delete", component: deleteCity},
+    {path: "/cities/:cityId/upload", component: uploadCityFile},
+    {path: "/cities/list", component: getProvinceList},
+    {path: "/getTripCourse/:cityName", component: getTripCourse},
 
   ]
 })

@@ -1,21 +1,24 @@
 <template>
+
   <div>
-    <form @submit.prevent="submitForm">
-      <label>
-        title:
-        <input type="text" v-model="title"/>
-      </label>
-      <label>
-        content:
-        <textarea v-model="content"></textarea>
-      </label>
-      <label>
-        cityName:
-        <input type="text" v-model="cityName"/>
-      </label>
-      <input type="file" @change="handleFileUpload"/>
-      <button type="submit">Submit</button>
-    </form>
+    <div class="mb-3">
+      <label class="form-label">제목</label>
+      <input type="text" v-model="title" class="form-control" placeholder="">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">도시 이름</label>
+      <input type="text" v-model="cityName" class="form-control" placeholder="">
+    </div>
+    <div @submit.prevent="submitForm" class="mb-3">
+      <label class="form-label">내용</label>
+      <textarea class="form-control" v-model="content" rows="30"></textarea>
+    </div>
+    <div>
+      <form class="input-group mb-3" @submit.prevent="handleFileUpload">
+        <input class="form-control" type="file" @change="handleFileUpload">
+      </form>
+      <button class="btn btn-primary" type="submit" @click="submitForm">작성</button>
+    </div>
   </div>
 </template>
 
@@ -37,29 +40,31 @@ export default {
 
     const submitForm = () => {
 
-      const saveJson = {
+      const req = {
         title: title.value,
         content: content.value,
         cityName: cityName.value
       };
 
       const formData = new FormData();
-      formData.append('saveJson', JSON.stringify(saveJson));
+      formData.append('req', JSON.stringify(req));
       formData.append('multipartFile', file.value);
 
-      axios.post('http://localhost:8080/api/v1/courses', formData, {
+      axios.post('/api/v1/courses', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhQGVtYWlsLmNvbSIsImV4cCI6MTcwNTU0ODIxNSwiaWF0IjoxNzA1NTQ0NjE1fQ.9Giu9cE4odgcn9gn-3HnjpDbn7u3Wn3bohOzt1WTLO8'
+          'Authorization': localStorage.getItem('Authorization')
         }
 
       })
       .then(response => {
         console.log('Success:', response);
-        router.push(`/courses/${response.data.data.courseId}`);
+        alert('정상적으로 처리되었습니다')
+        router.push(`/courses/${response.data.data.courseId}/test`);
       })
       .catch(error => {
         console.error('Error:', error);
+        alert('error')
       });
     };
 
