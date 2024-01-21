@@ -18,7 +18,7 @@
         </b-navbar-nav>
       </b-collapse>
       <b-navbar-nav>
-        <b-nav-item href="/" class="ml-auto">채팅</b-nav-item>
+        <b-nav-item href="/api/v1/chat-rooms/chat-page" class="ml-auto">채팅</b-nav-item>
         <b-nav-item href="/login" class="ml-auto">로그인</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
