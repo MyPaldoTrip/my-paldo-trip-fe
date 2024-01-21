@@ -33,4 +33,3 @@ jobs:
             source ~/.nvm/nvm.sh
             nvm use 17.0.0
             npm install
-            npm run build
