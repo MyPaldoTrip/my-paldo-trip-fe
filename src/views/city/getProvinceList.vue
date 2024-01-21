@@ -40,7 +40,7 @@ export default {
     });
 
     const fetchProvinces = () => {
-      axios.post('http://localhost:8080/api/v1/cities/provinces/infoSort', searchReq.value, {
+      axios.post('/api/v1/cities/provinces/infoSort', searchReq.value, {
         params: {},
         headers: {'Authorization': localStorage.getItem('Authorization')}
       })
@@ -66,7 +66,7 @@ export default {
     const fetchCitiesByProvince = (province) => {
       // 클릭한 provinceName으로 도시 목록을 가져오기
 
-      axios.get(`http://localhost:8080/api/v1/cities/provinces/${province.provinceName}`, {
+      axios.get(`/api/v1/cities/provinces/${province.provinceName}`, {
         headers: {'Authorization': localStorage.getItem('Authorization')}
       })
       .then(response => {

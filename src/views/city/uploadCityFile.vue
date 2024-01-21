@@ -26,7 +26,7 @@ export default {
       const formData = new FormData();
       formData.append('multipartFile', file.value);
 
-      axios.post(`http://localhost:8080/api/v1/cities/${cityId}/files`, formData, {
+      axios.post(`/api/v1/cities/${cityId}/files`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

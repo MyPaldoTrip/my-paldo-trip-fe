@@ -26,7 +26,7 @@ export default {
     const updateCity = () => {
 
       console.log(cityId)
-      axios.put(`http://localhost:8080/api/v1/cities/${cityId}`, cityUpdateReq.value, {
+      axios.put(`/api/v1/cities/${cityId}`, cityUpdateReq.value, {
         headers: {
           'Authorization': localStorage.getItem('Authorization')
         }

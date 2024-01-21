@@ -25,7 +25,7 @@ export default {
     const likeStatus = ref(false)
 
     const likeCheck = () => {
-      axios.get(`http://localhost:8080/api/v1/courses/${courseId}/likes`, {
+      axios.get(`/api/v1/courses/${courseId}/likes`, {
         headers: {
           Authorization: localStorage.getItem('Authorization')
         }
@@ -41,7 +41,7 @@ export default {
     };
 
     const toggleLike = () => {
-      axios.post(`http://localhost:8080/api/v1/courses/${courseId}/likes`, {}, {
+      axios.post(`/api/v1/courses/${courseId}/likes`, {}, {
         headers: {
           Authorization: localStorage.getItem('Authorization')
         }
