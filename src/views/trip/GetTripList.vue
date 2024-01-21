@@ -91,7 +91,7 @@ export default {
     const getTripList = async () => {
       vueState.error = null;
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/trips/lists', {
+        const response = await axios.post('/api/v1/trips/lists', {
           "cityName": vueState.searchCity || null,
           "category": vueState.selectedCategory || null,
           "tripSort": vueState.selectedTripSort || null,

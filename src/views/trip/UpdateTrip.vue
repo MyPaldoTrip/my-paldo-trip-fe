@@ -55,7 +55,7 @@ const tripId = Number(route.params.id);
 
 const fetchTrip = async () => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}`);
+    const response = await axios.get(`/api/v1/trips/${tripId}`);
     const trip = response.data.data;
     vueState.value = {...trip, cityId: Number(trip.cityId)};
   } catch (error) {
@@ -73,7 +73,7 @@ const submitForm = async () => {
       description: vueState.value.description,
     };
 
-    await axios.patch(`http://localhost:8080/api/v1/trips/${tripId}`, updateReq, {
+    await axios.patch(`/api/v1/trips/${tripId}`, updateReq, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('Authorization')

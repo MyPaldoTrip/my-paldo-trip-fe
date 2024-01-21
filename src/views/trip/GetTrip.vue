@@ -112,7 +112,7 @@ export default {
       vueState.tripId = tripId;
 
       try {
-        const response = await axios.get(`http://localhost:8080/api/v1/trips/${tripId}`)
+        const response = await axios.get(`/api/v1/trips/${tripId}`)
         vueState.trip = response.data.data;
         await getReviewList(tripId);
       } catch (error) {
@@ -141,7 +141,7 @@ export default {
       }
 
       try {
-        const response = await axios.post(`http://localhost:8080/api/v1/trips/${vueState.tripId}/reviews/lists`, vueState.reviewListReq, {
+        const response = await axios.post(`/api/v1/trips/${vueState.tripId}/reviews/lists`, vueState.reviewListReq, {
           headers: {
             'Authorization': localStorage.getItem('Authorization')
           },
@@ -161,7 +161,7 @@ export default {
         return;
       }
       try {
-        await axios.post(`http://localhost:8080/api/v1/trips/${vueState.trip.tripId}/reviews`, vueState.newReview, {
+        await axios.post(`/api/v1/trips/${vueState.trip.tripId}/reviews`, vueState.newReview, {
           headers: {
             'Authorization': localStorage.getItem('Authorization'),
           },
@@ -181,7 +181,7 @@ export default {
 
     const editReview = async () => {
       try {
-        await  axios.patch(`http://localhost:8080/api/v1/trips/${vueState.trip.tripId}/reviews/${vueState.editingReview.reviewId}`, vueState.editingReview, {
+        await  axios.patch(`/api/v1/trips/${vueState.trip.tripId}/reviews/${vueState.editingReview.reviewId}`, vueState.editingReview, {
           headers: {
             'Authorization': localStorage.getItem('Authorization'),
           },
@@ -200,7 +200,7 @@ export default {
       }
 
       try {
-        await axios.delete(`http://localhost:8080/api/v1/trips/${vueState.trip.tripId}/reviews/${review.reviewId}`, {
+        await axios.delete(`/api/v1/trips/${vueState.trip.tripId}/reviews/${review.reviewId}`, {
           headers: {
             'Authorization': localStorage.getItem('Authorization'),
           },
@@ -223,7 +223,7 @@ export default {
       }
 
       try {
-        await axios.delete(`http://localhost:8080/api/v1/trips/${vueState.trip.tripId}`, {
+        await axios.delete(`/api/v1/trips/${vueState.trip.tripId}`, {
           headers: {
             'Authorization': localStorage.getItem('Authorization')
           },
