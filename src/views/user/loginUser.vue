@@ -17,7 +17,7 @@
   <div class="wrap">
     <div class="title">로그인</div>
     <a class="kakao"
-       href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=e7d865af6b6955f7a10c13318366d5c9&redirect_uri=http://localhost:8080/kakao-login/oauth2/code">
+       href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=e7d865af6b6955f7a10c13318366d5c9&redirect_uri=http://43.200.254.60:8080/kakao-login/oauth2/code">
 
       <div class="kakao_i"></div>
       <div class="kakao_txt">카카오톡으로 간편로그인</div>
