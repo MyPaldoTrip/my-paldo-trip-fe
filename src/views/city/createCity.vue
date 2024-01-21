@@ -50,7 +50,7 @@ export default {
       formData.append('multipartFile', multipartFile.value);
       console.log(multipartFile.value);
       console.log(saveJson.cityInfo);
-      axios.post('http://localhost:8080/api/v1/cities', formData, {
+      axios.post('/api/v1/cities', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': localStorage.getItem('Authorization')

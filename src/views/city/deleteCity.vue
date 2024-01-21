@@ -13,7 +13,7 @@ export default {
   methods: {
     deleteCity() {
       const cityId = this.$route.params.cityId;
-      axios.delete(`http://localhost:8080/api/v1/cities/${cityId}`, {
+      axios.delete(`/api/v1/cities/${cityId}`, {
         headers: {
           'Authorization': localStorage.getItem('Authorization')
         }

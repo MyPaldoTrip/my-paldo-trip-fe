@@ -64,7 +64,7 @@ export default {
       const cityName = route.params.cityName;
       vueState.error = null;
       try {
-        const response = await axios.post('http://localhost:8080/api/v1/trips/lists', {
+        const response = await axios.post('/api/v1/trips/lists', {
           "cityName": cityName,
           "category": null,
           "tripSort": 'RATING',
@@ -88,7 +88,7 @@ export default {
       courseSort: 'LIKE'
     });
     const fetchCourses = () => {
-      axios.post('http://localhost:8080/api/v1/courses/list', searchReq.value, {
+      axios.post('/api/v1/courses/list', searchReq.value, {
         params: {
           page: 0,
           size: 5
