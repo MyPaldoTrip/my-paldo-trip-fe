@@ -19,15 +19,43 @@
       </b-collapse>
       <b-navbar-nav>
         <b-nav-item href="/api/v1/chat-rooms/chat-page" class="ml-auto">채팅</b-nav-item>
-        <b-nav-item href="/login" class="ml-auto">로그인</b-nav-item>
+        <b-nav-item href="/login" class="ml-auto" v-if="!data.isLoggedIn">로그인</b-nav-item>
+
+        <b-nav-item class="ml-auto" v-else>
+          <router-link to="/updateUser">
+            <b-button>프로필 수정</b-button>
+          </router-link>
+          <router-link to="/deleteUser">
+            <b-button>회원 탈퇴</b-button>
+          </router-link>
+        </b-nav-item>
+
       </b-navbar-nav>
     </b-navbar>
   </div>
 
 </template>
 <script>
+
+import {reactive} from "vue";
+
 export default {
-  name: "vueHeader",
+  setup() {
+    const data = reactive({
+      isLoggedIn: false
+    })
+
+    const checkLogged = async () => {
+      const token = localStorage.getItem('Authorization')
+      if (token != null) {
+        data.isLoggedIn = true
+      }
+    }
+    checkLogged()
+    return {
+      data,
+    }
+  }
 };
 </script>
 <style>
