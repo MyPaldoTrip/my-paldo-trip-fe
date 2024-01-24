@@ -2,81 +2,94 @@
   <div>
     <br>
     <br>
-    <h1>유저 목록 조회</h1>
-    <div>
-      <input type="checkbox" id="checkbox1" v-model="vueState.ascChecked">
-      <label for="checkbox1">오름차순 : {{ vueState.ascChecked }}</label>
-      <input type="checkbox" id="checkbox2" v-model="vueState.follower">
-      <label for="checkbox2">팔로워 보기 : {{ vueState.follower }}</label>
-      <input type="checkbox" id="checkbox3" v-model="vueState.following">
-      <label for="checkbox3">팔로잉 보기 : {{ vueState.following }}</label>
-    </div>
-    <label>나이</label>
-    <input type="text" id="text1" v-model="vueState.age">
-    <label>레벨</label>
-    <input type="text" id="text1" v-model="vueState.level">
+    <b-container style="background-color: beige">
+      <h1>유저 목록 조회</h1>
+    </b-container>
+    <br>
 
-    <select v-model="vueState.role">
-      <option disabled value="">역할 별 보기</option>
-      <option v-for="roleType in vueState.roleTypes" :key="roleType" :value="roleType">
-        {{ roleType }}
-      </option>
-    </select>
+    <b-container style="background-color: beige">
+      <b-input-group class="d-flex justify-content-center">
+        <input type="checkbox" id="checkbox1" v-model="vueState.ascChecked">
+        <label for="checkbox1">오름차순 : {{ vueState.ascChecked }}</label>
+        <input type="checkbox" id="checkbox2" v-model="vueState.follower">
+        <label for="checkbox2">팔로워 보기 : {{ vueState.follower }}</label>
+        <input type="checkbox" id="checkbox3" v-model="vueState.following">
+        <label for="checkbox3">팔로잉 보기 : {{ vueState.following }}</label>
+      </b-input-group>
 
-    <select v-model="vueState.size">
-      <option disabled value="">화면에 표시할 개수</option>
-      <option v-for="size in vueState.sizeEnum" :key="size" :value="size">
-        {{ size }}
-      </option>
-    </select>
+      <b-input-group class="d-flex justify-content-center">
+        <label>나이</label>
+        <input type="text" id="text1" v-model="vueState.age">
+        <label>레벨</label>
+        <input type="text" id="text1" v-model="vueState.level">
+      </b-input-group>
 
-    <select v-model="vueState.sort">
-      <option disabled value="">정렬 방법</option>
-      <option v-for="sort in vueState.sortEnum" :key="sort" :value="sort">
-        {{ sort }}
-      </option>
-    </select>
+      <b-input-group class="d-flex justify-content-center">
+        <select v-model="vueState.role">
+          <option disabled value="">역할 별 보기</option>
+          <option v-for="roleType in vueState.roleTypes" :key="roleType" :value="roleType">
+            {{ roleType }}
+          </option>
+        </select>
 
-    <button @click="getUserList(1)">조건 검색</button>
+        <select v-model="vueState.size">
+          <option disabled value="">화면에 표시할 개수</option>
+          <option v-for="size in vueState.sizeEnum" :key="size" :value="size">
+            {{ size }}
+          </option>
+        </select>
 
-    <table v-if="vueState.userList" class="user-table">
-      <thead>
-      <tr>
-        <th>유저 ID</th>
-        <th>이메일</th>
-        <th>유저 이름</th>
-        <th>나이</th>
-        <th>레벨</th>
-        <th>역할</th>
-        <th>쓴 리뷰 수</th>
-        <th>팔로워 수</th>
-        <th>가입 일</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="(user, index) in vueState.userList.data" :key="index">
-        <td>{{ user.userId }}</td>
-        <router-link :to="`/getUser/${user.userId}`">
-          <td>{{ user.email }}</td>
-        </router-link>
-        <td>{{ user.username }}</td>
-        <td>{{ user.age }}</td>
-        <td>{{ user.level }}</td>
-        <td>{{ user.userRoleValue }}</td>
+        <select v-model="vueState.sort">
+          <option disabled value="">정렬 방법</option>
+          <option v-for="sort in vueState.sortEnum" :key="sort" :value="sort">
+            {{ sort }}
+          </option>
+        </select>
+        <b-button @click="getUserList(1)">조건 검색</b-button>
+      </b-input-group>
+    </b-container>
 
-        <td>{{ user.writeReviewCnt }}</td>
-        <td>{{ user.followerCnt }}</td>
-        <td>{{ user.modified }}</td>
-      </tr>
-      </tbody>
-    </table>
+    <br>
 
-    <div>
-      <button v-for="page in vueState.totalPageNumbers" :key="page" @click="getUserList(page)"
+    <b-container style="background-color: beige">
+      <table v-if="vueState.userList" class="user-table">
+        <thead>
+        <tr>
+          <th>유저 ID</th>
+          <th>이메일</th>
+          <th>유저 이름</th>
+          <th>나이</th>
+          <th>레벨</th>
+          <th>역할</th>
+          <th>쓴 리뷰 수</th>
+          <th>팔로워 수</th>
+          <th>가입 일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(user, index) in vueState.userList.data" :key="index">
+          <td>{{ user.userId }}</td>
+          <router-link :to="`/getUser/${user.userId}`">
+            <td>{{ user.email }}</td>
+          </router-link>
+          <td>{{ user.username }}</td>
+          <td>{{ user.age }}</td>
+          <td>{{ user.level }}</td>
+          <td>{{ user.userRoleValue }}</td>
+
+          <td>{{ user.writeReviewCnt }}</td>
+          <td>{{ user.followerCnt }}</td>
+          <td>{{ user.modified }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </b-container>
+
+
+    <b-button v-for="page in vueState.totalPageNumbers" :key="page" @click="getUserList(page)"
               class="center-container">
-        {{ page }}
-      </button>
-    </div>
+      {{ page }}
+    </b-button>
 
   </div>
 </template>
