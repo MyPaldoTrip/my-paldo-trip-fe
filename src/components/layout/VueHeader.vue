@@ -18,7 +18,8 @@
         </b-navbar-nav>
       </b-collapse>
       <b-navbar-nav>
-        <b-nav-item href="http://43.201.57.160:8080/api/v1/chat-rooms/chat-page" class="ml-auto">
+        <b-nav-item
+            @click="chat" class="ml-auto">
           채팅
         </b-nav-item>
         <b-nav-item href="/login" class="ml-auto" v-if="!data.isLoggedIn">로그인</b-nav-item>
@@ -46,6 +47,12 @@ export default {
     const data = reactive({
       isLoggedIn: false
     })
+    const chat = async () => {
+      const token = reactive({
+        authToken: localStorage.getItem('Authorization')
+      })
+      window.location.href = "http://localhost:8080/api/v1/chat-rooms/chat-page/" + token.authToken
+    }
 
     const checkLogged = async () => {
       const token = localStorage.getItem('Authorization')
@@ -56,6 +63,7 @@ export default {
     checkLogged()
     return {
       data,
+      chat
     }
   }
 };
