@@ -5,7 +5,8 @@
 
       <li v-for="file in courseFiles" :key="file.id">
         <img class="image" :src="file.FileURL" alt="여행지 이미지">
-        <button class="btn btn-outline-danger" @click="deleteCourseFile(file.CourseFileId)">Delete</button>
+        <button class="btn btn-outline-danger" @click="deleteCourseFile(file.CourseFileId)">Delete
+        </button>
       </li>
     </ul>
   </div>
@@ -17,7 +18,6 @@ import axios from 'axios';
 import {useRoute} from 'vue-router';
 
 export default {
-  props: ['courseId'],
   setup() {
     const route = useRoute();
     const courseFiles = ref([]);

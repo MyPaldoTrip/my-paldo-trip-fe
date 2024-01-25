@@ -33,7 +33,9 @@
       </tbody>
     </table>
     <div>
-      <button type="button" class="btn btn-outline-primary" @click="router().push(`/courses`)">코스 생성</button>
+      <button type="button" class="btn btn-outline-primary" @click="router().push(`/courses`)">코스
+        생성
+      </button>
 
     </div>
 
@@ -169,7 +171,7 @@ select.form-select {
   margin-left: 10px;
 }
 
-tbody.table-group-divider{
+tbody.table-group-divider {
   font-size: 20px;
 }
 

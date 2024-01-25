@@ -15,44 +15,49 @@
       </div>
     </div>
 
-  <div>
-    <button type="button" @click="router().push(`/courses/${course.courseId}/updatePage`)" class="btn btn-outline-warning">
-      코스 수정
-    </button>
-  </div>
+    <div>
+      <button type="button" @click="router().push(`/courses/${course.courseId}/updatePage`)"
+              class="btn btn-outline-warning">
+        코스 수정
+      </button>
+    </div>
   </div>
 
 </template>
 
 <script>
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
+import {useRoute} from "vue-router";
 import router from "@/router";
 
 export default {
-  data() {
-    return {
-      course: null
-    };
-  },
   methods: {
     router() {
       return router
-    },
-    fetchCourse() {
-      const courseId = this.$route.params.courseId;
+    }
+  },
+  setup() {
+    const route = useRoute();
+    const courseId = route.params.courseId;
+    const course = ref(null);
+
+    const fetchCourse = () => {
       axios.get(`/api/v1/courses/${courseId}`)
       .then(response => {
         console.log(response.data)
-        this.course = response.data.data;
+        course.value = response.data.data;
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('error')
       });
-    }
-  },
-  created() {
-    this.fetchCourse();
+    };
+
+    onMounted(fetchCourse);
+
+    return {
+      course
+    };
   }
 };
 </script>

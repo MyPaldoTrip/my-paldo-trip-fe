@@ -9,7 +9,6 @@ import axios from 'axios';
 import router from "@/router";
 
 export default {
-  props: ['courseId'],
   methods: {
     deleteCourse() {
       const courseId = this.$route.params.courseId;
@@ -32,7 +31,7 @@ export default {
 };
 </script>
 <style scoped>
-.btn{
+.btn {
   float: right;
   margin-right: 21%;
   margin-right: 21%;
