@@ -18,7 +18,9 @@
         </b-navbar-nav>
       </b-collapse>
       <b-navbar-nav>
-        <b-nav-item href="/api/v1/chat-rooms/chat-page" class="ml-auto">채팅</b-nav-item>
+        <b-nav-item href="http://43.201.57.160:8080/api/v1/chat-rooms/chat-page" class="ml-auto">
+          채팅
+        </b-nav-item>
         <b-nav-item href="/login" class="ml-auto" v-if="!data.isLoggedIn">로그인</b-nav-item>
 
         <b-nav-item class="ml-auto" v-else>
