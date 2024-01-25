@@ -60,7 +60,8 @@ export default {
       const token = reactive({
         authToken: localStorage.getItem('Authorization')
       })
-      window.location.href = "http://localhost:8080/api/v1/chat-rooms/chat-page/" + token.authToken
+      window.location.href = "http://43.201.57.160:8080/api/v1/chat-rooms/chat-page/"
+          + token.authToken
     }
 
     const checkLogged = async () => {
