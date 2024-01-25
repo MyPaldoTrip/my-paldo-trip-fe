@@ -15,17 +15,18 @@
       </div>
     </div>
 
-  <div>
-    <button type="button" @click="router().push(`/courses/${course.courseId}/updatePage`)" class="btn btn-outline-warning">
-      코스 수정
-    </button>
-  </div>
+    <div>
+      <button type="button" @click="router().push(`/courses/${course.courseId}/updatePage`)"
+              class="btn btn-outline-warning">
+        코스 수정
+      </button>
+    </div>
   </div>
 
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
 import {useRoute} from "vue-router";
 import router from "@/router";

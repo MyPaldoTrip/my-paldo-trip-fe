@@ -7,7 +7,7 @@
     <div @submit.prevent="updateCourse" class="mb-3">
       <label class="form-label">수정할 내용</label>
       <textarea class="form-control" v-model="courseUpdateReq.content" rows="30"></textarea>
-      <button class="btn btn-outline-warning" type="submit" @click="updateCourse" >수정 완료</button>
+      <button class="btn btn-outline-warning" type="submit" @click="updateCourse">수정 완료</button>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
     const route = useRoute();
     const courseId = route.params.courseId;
     const courseUpdateReq = ref({
-      title:'', content:''
+      title: '', content: ''
     });
 
     const fetchCourse = () => {
