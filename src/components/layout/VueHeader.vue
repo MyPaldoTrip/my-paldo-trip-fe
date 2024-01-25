@@ -18,19 +18,27 @@
         </b-navbar-nav>
       </b-collapse>
       <b-navbar-nav>
-        <b-nav-item href="http://43.201.57.160:8080/api/v1/chat-rooms/chat-page" class="ml-auto">
+        <b-nav-item
+            @click="chat" class="ml-auto">
           채팅
         </b-nav-item>
         <b-nav-item href="/login" class="ml-auto" v-if="!data.isLoggedIn">로그인</b-nav-item>
 
-        <b-nav-item class="ml-auto" v-else>
-          <router-link to="/updateUser">
-            <b-button>프로필 수정</b-button>
+
+        <b-nav-item-dropdown class="ml-auto" v-else>
+          <template #button-content>
+            <em>{{ data.username }}</em>
+          </template>
+
+          <router-link to="/myProfile">
+            <b-nav-item style="background-color: beige">내 정보</b-nav-item>
           </router-link>
           <router-link to="/deleteUser">
-            <b-button>회원 탈퇴</b-button>
+            <b-nav-item style="background-color: beige">회원 탈퇴</b-nav-item>
           </router-link>
-        </b-nav-item>
+
+
+        </b-nav-item-dropdown>
 
       </b-navbar-nav>
     </b-navbar>
@@ -39,13 +47,21 @@
 </template>
 <script>
 
-import {reactive} from "vue";
+import {onMounted, reactive} from "vue";
+import axios from "axios";
 
 export default {
   setup() {
     const data = reactive({
-      isLoggedIn: false
+      isLoggedIn: false,
+      username: null,
     })
+    const chat = async () => {
+      const token = reactive({
+        authToken: localStorage.getItem('Authorization')
+      })
+      window.location.href = "http://localhost:8080/api/v1/chat-rooms/chat-page/" + token.authToken
+    }
 
     const checkLogged = async () => {
       const token = localStorage.getItem('Authorization')
@@ -53,9 +69,18 @@ export default {
         data.isLoggedIn = true
       }
     }
+    const getUsername = async () => {
+      const response = await axios.get(`/api/v1/users`,
+          {headers: {'Authorization': localStorage.getItem('Authorization')}})
+      data.username = response.data.data.username
+    }
     checkLogged()
+
+    onMounted(getUsername)
+
     return {
       data,
+      chat,
     }
   }
 };

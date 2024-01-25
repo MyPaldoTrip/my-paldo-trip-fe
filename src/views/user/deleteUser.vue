@@ -1,5 +1,6 @@
 <template>
-  <button @click="deleteUser">회원탈퇴</button>
+  <h1 style="color: coral">회원 탈퇴하시겠습니까?</h1>
+  <b-button @click="deleteUser" style="background-color: cadetblue">네 탈퇴하겠습니다.</b-button>
 </template>
 
 <script>
