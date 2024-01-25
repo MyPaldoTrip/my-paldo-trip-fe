@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-import {reactive} from "vue";
+import {onMounted, reactive} from "vue";
 import router from "@/router";
 
 export default {
@@ -42,6 +42,17 @@ export default {
         console.error(error);
       }
     }
+    const fetchUser = async () => {
+      const response = await axios.get(`/api/v1/users`,
+          {headers: {'Authorization': localStorage.getItem('Authorization')}})
+      console.log(response.data.data)
+      postData.username = response.data.data.username
+      postData.introduction = response.data.data.introduction
+      postData.age = response.data.data.age
+      postData.password = response.data.data.password
+      postData.multipartFile = response.data.data.multipartFile
+    }
+    onMounted(fetchUser)
     return {
       uploadFile,
       update,
