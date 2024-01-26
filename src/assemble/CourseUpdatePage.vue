@@ -1,24 +1,20 @@
 <template>
   <div>
     <update-course/>
-    <upload-course-file/>
-    <delete-course-file/>
+    <manage-course-file/>
 
   </div>
 </template>
 
 <script>
 
-
-import uploadCourseFile from "@/views/course/uploadCourseFile.vue";
-import deleteCourseFile from "@/views/course/deleteCourseFile.vue";
 import updateCourse from "@/views/course/updateCourse.vue";
+import manageCourseFile from "@/views/course/manageCourseFile.vue";
 
 export default {
   components: {
     updateCourse,
-    uploadCourseFile,
-    deleteCourseFile
+    manageCourseFile
 
   }
 }
