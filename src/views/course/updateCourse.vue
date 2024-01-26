@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <div class="mb-3">
       <label class="form-label">수정할 제목</label>
       <input type="text" v-model="courseUpdateReq.title" class="form-control" placeholder="">
@@ -76,3 +76,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.body {
+  margin: 30px 15% auto 15%;
+}
+</style>
