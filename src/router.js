@@ -35,6 +35,8 @@ import getTripCourse from "@/views/city/getTripCourse.vue";
 import SingleCoursePage from "@/assemble/SingleCoursePage.vue";
 import RedirectPage from "@/views/user/RedirectPage.vue";
 import CourseUpdatePage from "@/assemble/CourseUpdatePage.vue";
+import getMyProfile from "@/views/user/getMyProfile.vue";
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -78,6 +80,7 @@ const router = createRouter({
     {path: "/cities/list", component: getProvinceList},
     {path: "/getTripCourse/:cityName", component: getTripCourse},
     {path: "/kakao-login/oauth2/code", component: RedirectPage},
+    {path: "/myProfile", component: getMyProfile},
   ]
 })
 
