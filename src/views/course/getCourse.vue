@@ -16,9 +16,8 @@
         </div>
       </div>
     </div>
-
     <div>
-      <button type="button" @click="router().push(`/courses/${course.courseId}/updatePage`)"
+      <button type="button" @click="router().push(`/courses/${course.courseId}/update`)"
               class="btn btn-outline-warning">
         코스 수정
       </button>
