@@ -37,7 +37,6 @@ export default {
       .then(response => {
         console.log('res', response)
         likeStatus.value = response.data.data;
-        console.log('zz', response.data.data.isLiked);
       })
       .catch(error => {
         console.error('Error', error)
