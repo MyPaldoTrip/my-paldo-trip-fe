@@ -171,8 +171,20 @@ select.form-select {
   margin-left: 10px;
 }
 
+.btn-outline-info {
+  margin-top: 10px;
+}
+
+.btn-outline-primary {
+  margin-bottom: 10px;
+}
+
 tbody.table-group-divider {
   font-size: 20px;
+}
+
+.cards {
+  margin: 100px 10% 30px 10%;
 }
 
 </style>
