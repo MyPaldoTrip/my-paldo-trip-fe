@@ -22,6 +22,9 @@
         코스 수정
       </button>
     </div>
+    <div>
+      관련 여행정보 : {{ course.relatedTripId }}
+    </div>
   </div>
 
 </template>
