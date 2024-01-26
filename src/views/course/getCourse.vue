@@ -7,10 +7,12 @@
           <p class="date">{{ course.createdAt.substr(0, 10) }}</p>
           <div v-for="(url, index) in course.fileURL" :key="index">
             <img class="image" :src="url" alt="여행지 이미지">
+            <div>
+            </div>
+            <div class="content">
+            </div>
           </div>
-          <div class="content">
-            <p>{{ course.content }}</p>
-          </div>
+          <h1>{{ course.content }}</h1>
         </div>
       </div>
     </div>
@@ -62,12 +64,8 @@ export default {
 };
 </script>
 <style scoped>
-body {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  background: #88ceff;
-  color: #333;
-  margin: 0;
-  padding: 0;
+.body {
+  margin: auto 15% auto 15%;
 }
 
 .container {
