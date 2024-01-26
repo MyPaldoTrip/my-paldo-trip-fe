@@ -3,10 +3,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 import getCourse from "@/views/course/getCourse.vue";
 import getCourseList from "@/views/course/getCourseList.vue";
 import addCourse from "@/views/course/addCourse.vue";
-import updateCourse from "@/views/course/updateCourse.vue";
 import deleteCourse from "@/views/course/deleteCourse.vue";
-import uploadCourseFile from "@/views/course/uploadCourseFile.vue";
-import deleteFile from "@/views/course/deleteCourseFile.vue";
+import uploadCourseFile from "@/views/course/manageCourseFile.vue";
 import toggleLike from "@/views/like/toggleLike.vue";
 import addComment from "@/views/comment/addComment.vue";
 import VueAbout from "./views/sample/VueAbout.vue";
@@ -35,8 +33,8 @@ import GetTripFileList from "./views/trip/getTripFileList.vue";
 import GetTripFile from "./views/trip/getTripFile.vue";
 import getTripCourse from "@/views/city/getTripCourse.vue";
 import SingleCoursePage from "@/assemble/SingleCoursePage.vue";
-import CourseUpdatePage from "@/assemble/CourseUpdatePage.vue";
 import RedirectPage from "@/views/user/RedirectPage.vue";
+import CourseUpdatePage from "@/assemble/CourseUpdatePage.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -45,12 +43,10 @@ const router = createRouter({
     {path: "/courses", component: addCourse},
     {path: "/courses/list", component: getCourseList},
     {path: "/courses/:courseId", component: getCourse},
-    {path: "/courses/:courseId/update", component: updateCourse},
     {path: "/courses/:courseId/upload", component: uploadCourseFile},
     {path: "/courses/:courseId/delete", component: deleteCourse},
-    {path: "/courses/:courseId/files/delete", component: deleteFile},
     {path: "/courses/:courseId/test", component: SingleCoursePage},
-    {path: "/courses/:courseId/updatePage", component: CourseUpdatePage},
+    {path: "/courses/:courseId/update", component: CourseUpdatePage},
     // like
     {path: "/courses/:courseId/likes", component: toggleLike},
     // comment
