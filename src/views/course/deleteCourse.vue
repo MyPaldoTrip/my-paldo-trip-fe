@@ -19,7 +19,7 @@ export default {
       })
       .then(response => {
         console.log('Course deleted:', response.data);
-        alert("파일이 삭제되었습니다.")
+        alert("코스가 삭제되었습니다.")
         router.push(`/courses/list`)
       })
       .catch(error => {
@@ -33,7 +33,6 @@ export default {
 <style scoped>
 .btn {
   float: right;
-  margin-right: 21%;
   margin-right: 21%;
 }
 </style>

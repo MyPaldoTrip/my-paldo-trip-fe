@@ -1,14 +1,22 @@
 <template>
-  <div>
+  <div class="body">
     <div class="mb-3">
       <label class="form-label">수정할 제목</label>
       <input type="text" v-model="courseUpdateReq.title" class="form-control" placeholder="">
     </div>
-    <div @submit.prevent="updateCourse" class="mb-3">
+    <div class="mb-3">
+      <label class="form-label">수정할 도시정보</label>
+      <input type="text" v-model="courseUpdateReq.cityName" class="form-control" placeholder="">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">수정할 여행정보</label>
+      <input type="text" v-model="courseUpdateReq.tripIds" class="form-control" placeholder="">
+    </div>
+    <div  class="mb-3">
       <label class="form-label">수정할 내용</label>
       <textarea class="form-control" v-model="courseUpdateReq.content" rows="30"></textarea>
-      <button class="btn btn-outline-warning" type="submit" @click="updateCourse">수정 완료</button>
     </div>
+    <button class="btn btn-outline-warning" @click="updateCourse">수정 완료</button>
   </div>
 </template>
 
@@ -23,7 +31,7 @@ export default {
     const route = useRoute();
     const courseId = route.params.courseId;
     const courseUpdateReq = ref({
-      title: '', content: ''
+      title: '', content: '', cityName:'', tripIds:[]
     });
 
     const fetchCourse = () => {
@@ -31,6 +39,9 @@ export default {
       .then(response => {
         courseUpdateReq.value.title = response.data.data.title;
         courseUpdateReq.value.content = response.data.data.content;
+        courseUpdateReq.value.cityName = response.data.data.cityName;
+        courseUpdateReq.value.tripIds = response.data.data.relatedTripId;
+
       })
       .catch(error => {
         console.error('Error:', error);
@@ -38,6 +49,8 @@ export default {
     };
 
     const updateCourse = () => {
+      const tripIds = courseUpdateReq.value.tripIds.split(',').map(Number);
+      courseUpdateReq.value.tripIds = tripIds;
       axios.put(`/api/v1/courses/${courseId}`, courseUpdateReq.value, {
         headers: {
           'Authorization': localStorage.getItem('Authorization')
@@ -63,3 +76,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.body {
+  margin: 30px 15% auto 15%;
+}
+</style>

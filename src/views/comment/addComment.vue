@@ -17,7 +17,7 @@
       <div v-for="(comment, index) in comments" :key="index">
         <div class="comment">
         <a class="list-group-item list-group-item-action list-group-item-primary">작성자 :
-          {{ comment.username }}(lv{{comment.level}})</a>
+          {{ comment.username }}(lv{{ 0 + comment.level }})</a>
         <a class="list-group-item list-group-item-action list-group-item-info">댓글내용 :
           {{ comment.content }}</a>
         </div>

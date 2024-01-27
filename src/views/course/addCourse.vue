@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div class="form">
     <div class="mb-3">
       <label class="form-label">제목</label>
       <input type="text" v-model="title" class="form-control" placeholder="">
@@ -8,6 +8,10 @@
     <div class="mb-3">
       <label class="form-label">도시 이름</label>
       <input type="text" v-model="cityName" class="form-control" placeholder="">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">연관된 여행 정보</label>
+      <input type="text" v-model="relatedTripId" class="form-control" placeholder="">
     </div>
     <div @submit.prevent="submitForm" class="mb-3">
       <label class="form-label">내용</label>
@@ -33,6 +37,7 @@ export default {
     const content = ref('');
     const cityName = ref('');
     const file = ref(null);
+    const relatedTripId = ref('');
 
     const handleFileUpload = event => {
       file.value = event.target.files[0];
@@ -43,7 +48,8 @@ export default {
       const req = {
         title: title.value,
         content: content.value,
-        cityName: cityName.value
+        cityName: cityName.value,
+        tripIds: relatedTripId.value.split(',').map(Number)
       };
 
       const formData = new FormData();
@@ -72,9 +78,15 @@ export default {
       title,
       content,
       cityName,
+      relatedTripId,
       handleFileUpload,
       submitForm
     };
   }
 };
 </script>
+<style scoped>
+.form {
+  margin: auto 20% auto 20%;
+}
+</style>
