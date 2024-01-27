@@ -16,14 +16,22 @@
         </div>
       </div>
     </div>
+
+    <div class="trip" >
+        <div class="card" v-for="(trip, index) in relatedTrips" :key="index">
+          <img class="card-img-top" :src="trip.urlList[0]" alt="">
+          <div class="card-body">
+            <h5 class="card-title">{{ trip.name }}</h5>
+            <p class="card-text">{{trip.description }}</p>
+            <a class="btn btn-primary" @click="router().push(`/getTrip/${trip.tripId}`)">자세히 보기</a>
+          </div>
+        </div>
+      </div>
     <div>
       <button type="button" @click="router().push(`/courses/${course.courseId}/update`)"
               class="btn btn-outline-warning">
         코스 수정
       </button>
-    </div>
-    <div>
-      관련 여행정보 : {{ course.relatedTripId }}
     </div>
   </div>
 
@@ -45,22 +53,38 @@ export default {
     const route = useRoute();
     const courseId = route.params.courseId;
     const course = ref(null);
+    const relatedTrips = ref([]);
 
     const fetchCourse = () => {
       axios.get(`/api/v1/courses/${courseId}`)
       .then(response => {
-        console.log(response.data)
         course.value = response.data.data;
+        fetchRelatedTrips(course.value.relatedTripId);
+        console.log(response.data)
       })
       .catch(error => {
         console.error('Error:', error);
       });
     };
 
+    const fetchRelatedTrips = (tripIds) => {
+      tripIds.forEach(tripId => {
+        axios.get(`/api/v1/trips/${tripId}`)
+        .then(response => {
+          relatedTrips.value.push(response.data.data);
+          console.log(response.data.data)
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      });
+    };
+
     onMounted(fetchCourse);
 
     return {
-      course
+      course,
+      relatedTrips
     };
   }
 };
@@ -114,5 +138,26 @@ export default {
 .btn {
   float: right;
   margin-right: 21%;
+}
+.trip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: auto 15% auto 15%;
+}
+.card {
+  width: 23%;
+  margin-bottom: 2%;
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-primary {
+  margin: 0;
 }
 </style>
