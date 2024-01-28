@@ -43,8 +43,10 @@ export default {
       }
     }
     const fetchUser = async () => {
-      const response = await axios.get(`/api/v1/users`,
+      const res = await axios.get(`/api/v1/users`,
           {headers: {'Authorization': localStorage.getItem('Authorization')}})
+      const userId = res.data.data.userId;
+      const response = await axios.get(`/api/v1/users/${userId}`)
       console.log(response.data.data)
       postData.username = response.data.data.username
       postData.introduction = response.data.data.introduction
