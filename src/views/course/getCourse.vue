@@ -147,7 +147,7 @@ export default {
   margin: auto 15% auto 15%;
 }
 .card {
-  width: 23%;
+  width: 250px;
   margin-bottom: 2%;
 }
 .card-body {
@@ -159,5 +159,9 @@ export default {
 
 .btn-primary {
   margin: 0;
+}
+
+.card-img-top {
+  height: 250px;
 }
 </style>
