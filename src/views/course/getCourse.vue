@@ -6,10 +6,8 @@
           <h1 class="title">{{ course.title }}</h1>
           <p class="date">{{ course.createdAt.substr(0, 10) }}</p>
           <div v-for="(url, index) in course.fileURL" :key="index">
-            <img class="image" :src="url" alt="여행지 이미지">
+            <img :src="url" alt="여행지 이미지" class="image">
             <div>
-            </div>
-            <div class="content">
             </div>
           </div>
           <h1>{{ course.content }}</h1>
@@ -17,19 +15,19 @@
       </div>
     </div>
 
-    <div class="trip" >
-        <div class="card" v-for="(trip, index) in relatedTrips" :key="index">
-          <img class="card-img-top" :src="trip.urlList[0]" alt="">
-          <div class="card-body">
-            <h5 class="card-title">{{ trip.name }}</h5>
-            <p class="card-text">{{trip.description }}</p>
-            <a class="btn btn-primary" @click="router().push(`/getTrip/${trip.tripId}`)">자세히 보기</a>
-          </div>
+    <div class="trip">
+      <div v-for="(trip, index) in relatedTrips" :key="index" class="card">
+        <img :src="trip.urlList[0]" alt="" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">{{ trip.name }}</h5>
+          <p class="card-text">{{ trip.description }}</p>
+          <a class="btn btn-primary" @click="router().push(`/getTrip/${trip.tripId}`)">자세히 보기</a>
         </div>
       </div>
+    </div>
     <div>
-      <button type="button" @click="router().push(`/courses/${course.courseId}/update`)"
-              class="btn btn-outline-warning">
+      <button class="btn btn-outline-warning" type="button"
+              @click="router().push(`/courses/${course.courseId}/update`)">
         코스 수정
       </button>
     </div>
@@ -38,7 +36,7 @@
 </template>
 
 <script>
-import {ref, onMounted} from 'vue';
+import {onMounted, ref} from 'vue';
 import axios from 'axios';
 import {useRoute} from "vue-router";
 import router from "@/router";
@@ -125,11 +123,6 @@ export default {
   margin-bottom: 1em;
 }
 
-.content {
-  line-height: 2;
-
-}
-
 .content > p {
   margin-bottom: 1em;
   font-size: 30px;
@@ -139,6 +132,7 @@ export default {
   float: right;
   margin-right: 21%;
 }
+
 .trip {
   display: flex;
   align-items: center;
@@ -146,10 +140,12 @@ export default {
   flex-wrap: wrap;
   margin: auto 15% auto 15%;
 }
+
 .card {
   width: 250px;
   margin-bottom: 2%;
 }
+
 .card-body {
   display: flex;
   flex-direction: column;

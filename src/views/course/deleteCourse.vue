@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="button" class="btn btn-outline-danger" @click="deleteCourse">코스 삭제</button>
+    <button class="btn btn-outline-danger" type="button" @click="deleteCourse">코스 삭제</button>
   </div>
 </template>
 

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import {ref, onMounted} from 'vue';
+import {onMounted, ref} from 'vue';
 import axios from 'axios';
 import {useRoute} from 'vue-router';
 
@@ -115,6 +115,7 @@ export default {
 .btn {
   margin-top: 20px;
 }
+
 .body {
   margin: 30px 15% auto 15%;
 }
