@@ -112,7 +112,7 @@ export default {
         newComment.value.comment = '';
         getCommentList();
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error:', error)); //여기 메시지 추가 해야함
     };
 
     const getCommentList = () => {

@@ -35,7 +35,7 @@ export default {
         }
       })
       .then(response => {
-        console.log('res', response)
+        console.log('like', response)
         likeStatus.value = response.data.data;
       })
       .catch(error => {

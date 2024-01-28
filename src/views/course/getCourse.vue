@@ -203,4 +203,6 @@ export default {
 .card-img-top {
   height: 250px;
 }
+
+
 </style>
