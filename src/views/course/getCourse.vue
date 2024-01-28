@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div v-if="course.username === username" class="courseControl">
       <button class="btn btn-outline-warning" type="button"
               @click="router().push(`/courses/${course.courseId}/update`)">
         코스 수정
@@ -53,6 +53,8 @@ export default {
     const courseId = route.params.courseId;
     const course = ref(null);
     const relatedTrips = ref([]);
+    const username = ref(null);
+    const Authorization = localStorage.getItem('Authorization')
 
     const fetchCourse = () => {
       axios.get(`/api/v1/courses/${courseId}`)
@@ -76,6 +78,20 @@ export default {
         .catch(error => {
           console.error('Error:', error);
         });
+      });
+    };
+    const fetchUserProfile = () => {
+      axios.get('/api/v1/users', {
+        headers: {
+          'Authorization': Authorization
+        }
+      })
+      .then(response => {
+        username.value = response.data.data.username;
+        console.log('profile', response.data.data)
+      })
+      .catch(error => {
+        console.error('Error:', error);
       });
     };
 
@@ -104,6 +120,7 @@ export default {
     return {
       deleteCourse,
       course,
+      username,
       relatedTrips
     };
   }
@@ -150,9 +167,13 @@ export default {
   font-size: 30px;
 }
 
-.btn {
+.courseControl {
   float: right;
-  margin-right: 21%;
+  margin: 10px 21% 15px auto;
+
+  .btn {
+    margin-left: 10px;
+  }
 }
 
 .trip {
