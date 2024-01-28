@@ -18,12 +18,8 @@
         </b-navbar-nav>
       </b-collapse>
       <b-navbar-nav>
-        <b-nav-item
-            @click="chat" class="ml-auto">
-          채팅
-        </b-nav-item>
-        <b-nav-item href="/login" class="ml-auto" v-if="!data.isLoggedIn">로그인</b-nav-item>
-
+        <b-nav-item @click="chat" class="ml-auto">채팅</b-nav-item>
+        <b-nav-item href="/login" class="ml-auto" v-if="data.isLoggedIn==null">로그인</b-nav-item>
 
         <b-nav-item-dropdown class="ml-auto" v-else>
           <template #button-content>
@@ -36,7 +32,7 @@
           <router-link to="/deleteUser">
             <b-nav-item style="background-color: beige">회원 탈퇴</b-nav-item>
           </router-link>
-
+          <b-nav-item @click="logout" style="background-color: beige">로그아웃</b-nav-item>
 
         </b-nav-item-dropdown>
 
@@ -47,13 +43,15 @@
 </template>
 <script>
 
-import {onMounted, reactive} from "vue";
+import {reactive} from "vue";
 import axios from "axios";
+import router from "@/router";
 
 export default {
+
   setup() {
     const data = reactive({
-      isLoggedIn: false,
+      isLoggedIn: localStorage.getItem('Authorization'),
       username: null,
     })
     const chat = async () => {
@@ -64,24 +62,37 @@ export default {
           + token.authToken
     }
 
-    const checkLogged = async () => {
-      const token = localStorage.getItem('Authorization')
-      if (token != null) {
-        data.isLoggedIn = true
+    const getUsername = async () => {
+      try {
+        const response = await axios.get(`/api/v1/users`,
+            {headers: {'Authorization': localStorage.getItem('Authorization')}})
+        console.log(response)
+        data.username = response.data.data.username
+      } catch (error) {
+        console.log(error)
+        localStorage.removeItem('Authorization')
+        data.isLoggedIn = null
+        alert('로그인 유효 기간 만료로 자동 로그아웃 됩니다')
+        await router.push("/")
       }
     }
-    const getUsername = async () => {
-      const response = await axios.get(`/api/v1/users`,
-          {headers: {'Authorization': localStorage.getItem('Authorization')}})
-      data.username = response.data.data.username
-    }
-    checkLogged()
 
-    onMounted(getUsername)
+    const logout = () => {
+      localStorage.removeItem('Authorization')
+      data.isLoggedIn = null
+      alert('로그아웃 완료')
+      router.push("/")
+    }
+
+    if (localStorage.getItem('Authorization') !== null) {
+      getUsername()
+    }
 
     return {
       data,
       chat,
+      logout,
+
     }
   }
 };
