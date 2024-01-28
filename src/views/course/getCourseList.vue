@@ -1,22 +1,22 @@
 <template>
-  <div class = cards>
-  <div class="row row-cols-1 row-cols-md-4 g-4">
-    <div class="col" v-for="course in courses" :key="course.id">
-      <div class="card">
-        <img class="card-img-top" :src="course.thumbnailUrl" alt="">
-        <div class="card-body">
-          <h5 class="card-title">{{ course.title }}</h5>
-        </div>
-        <ul class="list-group list-group-flush">
+  <div class=cards>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div v-for="course in courses" :key="course.id" class="col">
+        <div class="card">
+          <img :src="course.thumbnailUrl" alt="" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{ course.title }}</h5>
+          </div>
+          <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
-                   class="bi bi-heart-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd"
-                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"></path>
+              <svg class="bi bi-heart-fill" fill="red" height="16" viewBox="0 0 16 16"
+                   width="16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                      fill-rule="evenodd"></path>
               </svg>
               {{ course.likeCount }}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                   class="bi bi-chat-dots" viewBox="0 0 16 16">
+              <svg class="bi bi-chat-dots" fill="currentColor" height="16" viewBox="0 0 16 16"
+                   width="16" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
                 <path
@@ -24,52 +24,52 @@
               </svg>
               {{ course.commentCount }}
             </li>
-          <li class="list-group-item">작성자 : {{ course.username }}(lv{{ 0 + course.level }})</li>
-          <li class="list-group-item">작성일 - {{ course.createdAt.substring(0, 10) }}</li>
-        </ul>
-        <div class="card-body">
-          <router-link :to="`/courses/${course.courseId}/test`">바로 가기</router-link>
+            <li class="list-group-item">작성자 : {{ course.username }}(lv{{ 0 + course.level }})</li>
+            <li class="list-group-item">작성일 - {{ course.createdAt.substring(0, 10) }}</li>
+          </ul>
+          <div class="card-body">
+            <router-link :to="`/courses/${course.courseId}/test`">바로 가기</router-link>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
   <div>
-    <button type="button" class="btn btn-outline-primary" @click="router().push(`/courses`)">코스
+    <button class="btn btn-outline-primary" type="button" @click="router().push(`/courses`)">코스
       생성
     </button>
   </div>
 
   <div class="search">
-    <input class="form-control" type="text" v-model="searchReq.filterByCityName"
+    <input v-model="searchReq.filterByCityName" aria-label="default input example" class="form-control"
            placeholder="도시 이름"
-           aria-label="default input example">
+           type="text">
 
-    <select class="form-select" v-model="searchReq.courseSort" @change="fetchCourses"
-            aria-label="Default select example">
+    <select v-model="searchReq.courseSort" aria-label="Default select example" class="form-select"
+            @change="fetchCourses">
       <option value="MODIFIED">최신순</option>
       <option value="LEVEL">등급 높은순</option>
       <option value="LIKE">좋아요 많은순</option>
       <option value="COMMENT">댓글 많은순</option>
     </select>
 
-    <button type="button" class="btn btn-primary" @click="fetchCourses">검색</button>
+    <button class="btn btn-primary" type="button" @click="fetchCourses">검색</button>
   </div>
   <div class="marginTop">
     <div>
-      <button type="button" class="btn btn-outline-info" @click="toggleFollow">
+      <button class="btn btn-outline-info" type="button" @click="toggleFollow">
         <span v-if="searchReq.filterByFollowing">전체 유저 보기</span>
         <span v-else>팔로우한 유저만 보기</span>
       </button>
     </div>
     <div>
-      <button type="button" class="btn btn-outline-info" v-for="pageNum in totalPages"
-              :key="pageNum" @click="setPage(pageNum)">
+      <button v-for="pageNum in totalPages" :key="pageNum" class="btn btn-outline-info"
+              type="button" @click="setPage(pageNum)">
         {{ pageNum }}
       </button>
     </div>
   </div>
-  <select class="form-select" v-model="size" @change="fetchCourses">
+  <select v-model="size" class="form-select" @change="fetchCourses">
     <option value="5">5개씩 보기</option>
     <option value="10">10개씩 보기</option>
     <option value="15">15개씩 보기</option>
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import {ref, onMounted} from 'vue';
+import {onMounted, ref} from 'vue';
 import axios from 'axios';
 import router from "@/router";
 
@@ -92,7 +92,7 @@ export default {
     const courses = ref([]);
     const page = ref(1);
     const size = ref(10);
-    const totalPages = ref(5); // 총 페이지 수. 필요한 경우 이 값을 동적으로 업데이트하십시오.
+    const totalPages = ref(1);
     const searchReq = ref({
       filterByCityName: '',
       filterByFollowing: false,
@@ -143,12 +143,6 @@ export default {
 </script>
 
 <style scoped>
-
-table.table {
-  margin-bottom: 50px;
-}
-
-
 input.form-control {
   width: 10%;
 }
@@ -177,10 +171,6 @@ select.form-select {
 
 .btn-outline-primary {
   margin-bottom: 10px;
-}
-
-tbody.table-group-divider {
-  font-size: 20px;
 }
 
 .cards {

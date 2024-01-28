@@ -3,19 +3,19 @@
   <div class="form">
     <div class="mb-3">
       <label class="form-label">제목</label>
-      <input type="text" v-model="title" class="form-control" placeholder="">
+      <input v-model="title" class="form-control" placeholder="" type="text">
     </div>
     <div class="mb-3">
       <label class="form-label">도시 이름</label>
-      <input type="text" v-model="cityName" class="form-control" placeholder="">
+      <input v-model="cityName" class="form-control" placeholder="" type="text">
     </div>
     <div class="mb-3">
       <label class="form-label">연관된 여행 정보</label>
-      <input type="text" v-model="relatedTripId" class="form-control" placeholder="">
+      <input v-model="relatedTripId" class="form-control" placeholder="" type="text">
     </div>
-    <div @submit.prevent="submitForm" class="mb-3">
+    <div class="mb-3" @submit.prevent="submitForm">
       <label class="form-label">내용</label>
-      <textarea class="form-control" v-model="content" rows="30"></textarea>
+      <textarea v-model="content" class="form-control" rows="30"></textarea>
     </div>
     <div>
       <form class="input-group mb-3" @submit.prevent="handleFileUpload">

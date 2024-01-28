@@ -6,31 +6,38 @@
           <h1 class="title">{{ course.title }}</h1>
           <p class="date">{{ course.createdAt.substr(0, 10) }}</p>
           <div v-for="(url, index) in course.fileURL" :key="index">
-            <img class="image" :src="url" alt="여행지 이미지">
+            <img :src="url" alt="여행지 이미지" class="image">
             <div>
-            </div>
-            <div class="content">
             </div>
           </div>
           <h1>{{ course.content }}</h1>
         </div>
       </div>
     </div>
-    <div>
-      <button type="button" @click="router().push(`/courses/${course.courseId}/update`)"
-              class="btn btn-outline-warning">
+
+    <div class="trip">
+      <div v-for="(trip, index) in relatedTrips" :key="index" class="card">
+        <img :src="trip.urlList[0]" alt="" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">{{ trip.name }}</h5>
+          <p class="card-text">{{ trip.description }}</p>
+          <a class="btn btn-primary" @click="router().push(`/getTrip/${trip.tripId}`)">자세히 보기</a>
+        </div>
+      </div>
+    </div>
+    <div v-if="course.username === username" class="courseControl">
+      <button class="btn btn-outline-warning" type="button"
+              @click="router().push(`/courses/${course.courseId}/update`)">
         코스 수정
       </button>
-    </div>
-    <div>
-      관련 여행정보 : {{ course.relatedTripId }}
+      <button class="btn btn-outline-danger" type="button" @click="deleteCourse">코스 삭제</button>
     </div>
   </div>
 
 </template>
 
 <script>
-import {ref, onMounted} from 'vue';
+import {onMounted, ref} from 'vue';
 import axios from 'axios';
 import {useRoute} from "vue-router";
 import router from "@/router";
@@ -45,22 +52,76 @@ export default {
     const route = useRoute();
     const courseId = route.params.courseId;
     const course = ref(null);
+    const relatedTrips = ref([]);
+    const username = ref(null);
+    const Authorization = localStorage.getItem('Authorization')
 
     const fetchCourse = () => {
       axios.get(`/api/v1/courses/${courseId}`)
       .then(response => {
-        console.log(response.data)
         course.value = response.data.data;
+        fetchRelatedTrips(course.value.relatedTripId);
+        console.log(response.data)
       })
       .catch(error => {
         console.error('Error:', error);
       });
     };
 
-    onMounted(fetchCourse);
+    const fetchRelatedTrips = (tripIds) => {
+      tripIds.forEach(tripId => {
+        axios.get(`/api/v1/trips/${tripId}`)
+        .then(response => {
+          relatedTrips.value.push(response.data.data);
+          console.log(response.data.data)
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      });
+    };
+    const fetchUserProfile = () => {
+      axios.get('/api/v1/users', {
+        headers: {
+          'Authorization': Authorization
+        }
+      })
+      .then(response => {
+        username.value = response.data.data.username;
+        console.log('profile', response.data.data)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    };
+
+    const deleteCourse = () => {
+      axios.delete(`/api/v1/courses/${courseId}`, {
+        headers: {
+          'Authorization': Authorization
+        }
+      })
+      .then(response => {
+        console.log('Course deleted:', response.data);
+        alert("코스가 삭제되었습니다.")
+        router.push(`/courses/list`)
+      })
+      .catch(error => {
+        console.error('Error', error);
+        alert('error')
+      });
+    }
+
+    onMounted(() => {
+      fetchCourse();
+      fetchUserProfile();
+    });
 
     return {
-      course
+      deleteCourse,
+      course,
+      username,
+      relatedTrips
     };
   }
 };
@@ -101,18 +162,47 @@ export default {
   margin-bottom: 1em;
 }
 
-.content {
-  line-height: 2;
-
-}
-
 .content > p {
   margin-bottom: 1em;
   font-size: 30px;
 }
 
-.btn {
+.courseControl {
   float: right;
-  margin-right: 21%;
+  margin: 10px 21% 15px auto;
+
+  .btn {
+    margin-left: 10px;
+  }
 }
+
+.trip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: auto 15% auto 15%;
+}
+
+.card {
+  width: 250px;
+  margin-bottom: 2%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-primary {
+  margin: 0;
+}
+
+.card-img-top {
+  height: 250px;
+}
+
+
 </style>

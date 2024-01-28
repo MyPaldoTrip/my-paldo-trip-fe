@@ -2,44 +2,44 @@
   <div>
     <div v-if="selectedComment" class="input-group mb-3">
       <h4>댓글 수정</h4>
-      <input type="text" v-model="selectedComment.content" class="form-control"
-             placeholder="수정할 내용을 입력하세요." aria-label="Comment"
-             aria-describedby="button-addon2">
-      <button class="btn btn-outline-info" @click="updateComment(selectedComment.commentId)"
-              type="button" id="button-addon2">수정완료
+      <input v-model="selectedComment.content" aria-describedby="button-addon2" aria-label="Comment"
+             class="form-control" placeholder="수정할 내용을 입력하세요."
+             type="text">
+      <button id="button-addon2" class="btn btn-outline-info"
+              type="button" @click="updateComment(selectedComment.commentId)">수정완료
       </button>
       <br>
       <br>
     </div>
-    <!-- 댓글 목록 -->
 
-      <h2>댓글 목록</h2>
-      <div v-for="(comment, index) in comments" :key="index">
-        <div class="comment">
+    <h2>댓글 목록</h2>
+    <div v-for="(comment, index) in comments" :key="index">
+      <div class="comment">
         <a class="list-group-item list-group-item-action list-group-item-primary">작성자 :
           {{ comment.username }}(lv{{ 0 + comment.level }})</a>
         <a class="list-group-item list-group-item-action list-group-item-info">댓글내용 :
           {{ comment.content }}</a>
-        </div>
-        <button type="button" class="btn btn-outline-warning" @click="selectComment(comment)">수정
-        </button>
-        <button type="button" class="btn btn-outline-danger"
-                @click="deleteComment(comment.commentId)">삭제
-        </button>
       </div>
+      <button class="btn btn-outline-warning" type="button" @click="selectComment(comment)">수정
+      </button>
+      <button class="btn btn-outline-danger" type="button"
+              @click="deleteComment(comment.commentId)">삭제
+      </button>
+    </div>
 
   </div>
   <div>
-    <input type="text" v-model="newComment.content" class="form-control"
-           placeholder="댓글을 입력하세요." aria-label="Comment"
-           aria-describedby="button-addon2">
-    <button class="btn btn-outline-primary" @click="saveComment"
-            type="button" id="button-addon2">댓글 등록</button>
+    <input v-model="newComment.content" aria-describedby="button-addon2" aria-label="Comment"
+           class="form-control" placeholder="댓글을 입력하세요."
+           type="text">
+    <button id="button-addon2" class="btn btn-outline-primary"
+            type="button" @click="saveComment">댓글 등록
+    </button>
   </div>
 
   <div class="control-panel">
     <label>
-      <select class="form-select" v-model="size" @change="getCommentList">
+      <select v-model="size" class="form-select" @change="getCommentList">
         <option value="5">5개씩 보기</option>
         <option value="10">10개씩 보기</option>
         <option value="15">15개씩 보기</option>
@@ -48,19 +48,19 @@
     </label>
     <div class="filter-panel">
       <label>
-        <select class="form-select" v-model="searchReq.commentSort" @change="getCommentList">
+        <select v-model="searchReq.commentSort" class="form-select" @change="getCommentList">
           <option value="MODIFIED">최신순</option>
           <option value="LEVEL">등급 높은순</option>
         </select>
       </label>
     </div>
 
-    <button type="button" class="btn btn-outline-info" v-for="pageNum in totalPages" :key="pageNum"
+    <button v-for="pageNum in totalPages" :key="pageNum" class="btn btn-outline-info" type="button"
             @click="setPage(pageNum)">
       {{ pageNum }}
     </button>
     <div>
-      <button type="button" class="btn btn-outline-info" @click="toggleFollow">
+      <button class="btn btn-outline-info" type="button" @click="toggleFollow">
         <span v-if="searchReq.filterByFollowing">전체 유저 보기</span>
         <span v-else>팔로우한 유저만 보기</span>
       </button>
@@ -84,7 +84,7 @@ export default {
     const Authorization = localStorage.getItem('Authorization');
     const page = ref(1);
     const size = ref(10);
-    const totalPages = ref(5); // 총 페이지 수. 필요한 경우 이 값을 동적으로 업데이트하십시오.
+    const totalPages = ref(1);
     const searchReq = ref({
       filterByFollowing: false,
       commentSort: 'MODIFIED'
@@ -112,7 +112,7 @@ export default {
         newComment.value.comment = '';
         getCommentList();
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error('Error:', error)); //여기 메시지 추가 해야함
     };
 
     const getCommentList = () => {
@@ -159,14 +159,14 @@ export default {
         alert('삭제되었습니다.')
         getCommentList();
       })
-      .catch(error =>{
-          console.error('Error:', error);
-        alert('권한이 없습니다');}
+      .catch(error => {
+            console.error('Error:', error);
+            alert('권한이 없습니다');
+          }
       );
 
     };
 
-    // 컴포넌트가 마운트 되면 댓글 목록을 불러옵니다.
     onMounted(getCommentList);
 
     return {
@@ -198,11 +198,13 @@ export default {
 .form-select {
   margin-bottom: 10px;
 }
-.form-control{
+
+.form-control {
   width: 25%;
   margin-left: 38%;
 }
-.comment{
+
+.comment {
   font-size: 25px;
 }
 </style>
