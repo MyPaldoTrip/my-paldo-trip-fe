@@ -30,6 +30,7 @@
               @click="router().push(`/courses/${course.courseId}/update`)">
         코스 수정
       </button>
+      <button class="btn btn-outline-danger" type="button" @click="deleteCourse">코스 삭제</button>
     </div>
   </div>
 
@@ -78,9 +79,30 @@ export default {
       });
     };
 
-    onMounted(fetchCourse);
+    const deleteCourse = () => {
+      axios.delete(`/api/v1/courses/${courseId}`, {
+        headers: {
+          'Authorization': Authorization
+        }
+      })
+      .then(response => {
+        console.log('Course deleted:', response.data);
+        alert("코스가 삭제되었습니다.")
+        router.push(`/courses/list`)
+      })
+      .catch(error => {
+        console.error('Error', error);
+        alert('error')
+      });
+    }
+
+    onMounted(() => {
+      fetchCourse();
+      fetchUserProfile();
+    });
 
     return {
+      deleteCourse,
       course,
       relatedTrips
     };
