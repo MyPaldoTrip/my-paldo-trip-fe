@@ -7,7 +7,6 @@
         <li class="list-group-item">이메일: {{ vueState.user.email }}</li>
         <li class="list-group-item">사용자 이름: {{ vueState.user.username }}</li>
         <li class="list-group-item">소개: {{ vueState.user.introduction }}</li>
-        <li class="list-group-item">프로필 URL: {{ vueState.user.profileURL }}</li>
         <li class="list-group-item">나이: {{ vueState.user.age }}</li>
         <li class="list-group-item">레벨: {{ vueState.user.level }}</li>
       </ul>
@@ -29,8 +28,10 @@ export default {
     const getUser = async () => {
       const response = await axios.get(`/api/v1/users`,
           {headers: {'Authorization': localStorage.getItem('Authorization')}})
-      vueState.user = response.data.data;
-      console.log(response.data.data)
+      const userId = response.data.data.userId;
+      const res = await axios.get(`/api/v1/users/${userId}`)
+      vueState.user = res.data.data;
+      console.log(res.data.data)
     }
     getUser()
     return {
@@ -42,7 +43,7 @@ export default {
 
 <style scoped>
 .card-img-top {
-  height: 200px;
+  height: 600px;
   object-fit: cover;
 }
 </style>
