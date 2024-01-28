@@ -92,7 +92,7 @@ export default {
     const courses = ref([]);
     const page = ref(1);
     const size = ref(10);
-    const totalPages = ref(5); // 총 페이지 수. 필요한 경우 이 값을 동적으로 업데이트하십시오.
+    const totalPages = ref(1);
     const searchReq = ref({
       filterByCityName: '',
       filterByFollowing: false,
