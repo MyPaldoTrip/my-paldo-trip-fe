@@ -4,8 +4,8 @@
       <h1>여행정보 수정</h1>
       <form @submit.prevent="submitForm">
         <div class="input-field">
-          <label for="cityId">도시 ID:</label>
-          <input id="cityId" type="number" v-model="vueState.cityId" required>
+          <label for="cityName">도시:</label>
+          <input id="cityName" type="text" v-model="vueState.cityName" required>
         </div>
 
 
@@ -43,7 +43,7 @@ import {useRoute, useRouter} from "vue-router";
 import axios from "axios";
 
 const vueState = ref({
-  cityId: '',
+  cityName: '',
   category: '',
   name: '',
   description: '',
@@ -57,7 +57,7 @@ const fetchTrip = async () => {
   try {
     const response = await axios.get(`/api/v1/trips/${tripId}`);
     const trip = response.data.data;
-    vueState.value = {...trip, cityId: Number(trip.cityId)};
+    vueState.value = {...trip, cityName: trip.cityName};
   } catch (error) {
     alert(error.response.data.message)
     console.error('There was an error fetching the trip:', error);
@@ -67,7 +67,7 @@ const fetchTrip = async () => {
 const submitForm = async () => {
   try {
     const updateReq = {
-      cityId: vueState.value.cityId,
+      cityName: vueState.value.cityName,
       category: vueState.value.category,
       name: vueState.value.name,
       description: vueState.value.description,
