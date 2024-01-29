@@ -6,7 +6,7 @@ export default {
 
 <template>
   <div>
-    <h1>Welcome to Home</h1>
+    <h1>마이 팔도 트립</h1>
   </div>
 </template>
 
