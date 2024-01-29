@@ -184,6 +184,7 @@ export default {
         console.error('Error:', error);
       });
     };
+
     onMounted(() => {
       getCommentList();
       fetchUserProfile();
