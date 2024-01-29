@@ -3,8 +3,8 @@
     <h1>여행정보 생성</h1>
     <form @submit.prevent="submitForm">
       <div class="input-field">
-        <label for="cityId">도시 ID:</label>
-        <input id="cityId" type="text" v-model="vueState.cityId" required>
+        <label for="cityName">도시:</label>
+        <input id="cityName" type="text" v-model="vueState.cityName" required>
       </div>
 
       <div class="input-field">
@@ -45,7 +45,7 @@ import axios from "axios";
 
 
 const vueState = ref({
-  cityId: '',
+  cityName: '',
   category: '',
   name: '',
   description: '',
@@ -64,7 +64,7 @@ const submitForm = async () => {
     console.log(vueState.value);
     const formData = new FormData();
     formData.append('req', JSON.stringify({
-      "cityId": vueState.value.cityId,
+      "cityName": vueState.value.cityName,
       "category": vueState.value.category,
       "name": vueState.value.name,
       "description": vueState.value.description,
