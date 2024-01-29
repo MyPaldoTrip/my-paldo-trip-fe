@@ -1,10 +1,6 @@
 <template>
   <div>
-    <br>
-    <br>
-    <h1>여행정보</h1>
     <div class="container">
-      <button class="create-button" @click="createTrip">여행정보 생성</button>
       <div class="search-field">
         <label for="citySearch">도시 이름 검색:</label>
         <input id="citySearch" type="text" v-model="vueState.searchCity" placeholder="도시 이름 검색">
@@ -29,31 +25,24 @@
           <option value="reviews">리뷰 순</option>
         </select>
       </div>
+      <button class="create-button" @click="createTrip">여행정보 생성</button>
     </div>
-    <table v-if="vueState.tripList" class="trip-table">
-      <thead>
-      <tr>
-        <th>여행정보 ID</th>
-        <th>도시</th>
-        <th>카테고리</th>
-        <th>여행정보 이름</th>
-        <th>평균 별점</th>
-        <th>리뷰 갯수</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="(trip, index) in vueState.tripList.data" :key="index" @click="goToGetTrip(trip.tripId)">
-        <td>{{ trip.tripId }}</td>
-        <td>{{ trip.city }}</td>
-        <td>{{ categoryToKorean(trip.category) }}</td>
-        <td>{{ trip.name }}</td>
-        <td>{{ trip.averageRating }}</td>
-        <td>{{ trip.reviews }}</td>
-      </tr>
-      </tbody>
-    </table>
+
+    <div class="card-container" v-if="vueState.tripList">
+      <div class="card" v-for="(trip, index) in vueState.tripList.data" :key="index" @click="goToGetTrip(trip.tripId)">
+        <img :src="getImageUrl(trip.fileUrlList)" alt="Default image" class="card-img">
+        <div class="card-body">
+          <h5 class="card-title">{{ trip.name }}</h5>
+          <p class="card-text"><strong>도시: </strong>{{ trip.city }}</p>
+          <p class="card-text"><strong>카테고리: </strong>{{ categoryToKorean(trip.category) }}</p>
+          <p class="card-text"><strong>평점: </strong>{{ trip.averageRating }}</p>
+          <p class="card-text"><strong>후기 수: </strong>{{ trip.reviews }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -83,6 +72,16 @@ export default {
           return category;
       }
     }
+
+    const getImageUrl = (fileUrlList) => {
+      if (fileUrlList && fileUrlList.length > 0) {
+        const randomIndex = Math.floor(Math.random() * fileUrlList.length);
+        return fileUrlList[randomIndex];
+      } else {
+        return '';
+      }
+    };
+
 
     const createTrip = () => {
       router.push('/createTrip')
@@ -116,6 +115,7 @@ export default {
     watch(() => [vueState.searchCity, vueState.selectedCategory], getTripList);
 
     return {
+      getImageUrl,
       getTripList,
       vueState,
       goToGetTrip,
@@ -149,8 +149,8 @@ export default {
   font-size: 14px;
   height: 30px;
   border: none;
-  background-color: #888888;
-  color: white;
+  background-color: #E8F9FD;
+  color: #071952;
   cursor: pointer;
   transition: background-color .3s;
 }
@@ -170,14 +170,51 @@ export default {
   margin-bottom: 5px;
 }
 
-.trip-table {
-  margin: auto;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
 .trip-table tbody tr:hover {
   background-color: #f5f5f5;
   cursor: pointer;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1em;
+}
+
+.card {
+  width: 18rem;
+  margin: 1em;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-img {
+  padding: 5px;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card-body {
+  padding: 2em;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.card-text {
+  font-size: 1em;
+  color: #777;
+  margin-bottom: 0.5em;
 }
 </style>
