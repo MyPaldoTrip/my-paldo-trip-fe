@@ -6,7 +6,7 @@
       <input type="text" v-model="postData.email" required/>
 
       <label>password:</label>
-      <input type="text" v-model="postData.password" required/>
+      <input type="password" v-model="postData.password" required/>
 
 
       <button type="submit">Submit</button>
