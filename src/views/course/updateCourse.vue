@@ -10,7 +10,7 @@
     </div>
     <div class="mb-3">
       <label class="form-label">수정할 여행정보</label>
-      <input v-model="courseUpdateReq.tripIds" class="form-control" placeholder="" type="text">
+      <input v-model="courseUpdateReq.tripNames" class="form-control" placeholder="" type="text">
     </div>
     <div class="mb-3">
       <label class="form-label">수정할 내용</label>
@@ -31,17 +31,20 @@ export default {
     const route = useRoute();
     const courseId = route.params.courseId;
     const courseUpdateReq = ref({
-      title: '', content: '', cityName: '', tripIds: []
+      title: '', content: '', cityName: '', tripNames: ''
     });
 
     const fetchCourse = () => {
       axios.get(`/api/v1/courses/${courseId}`)
       .then(response => {
-        console.log(response.data)
+        console.log('getCourseRes',response.data)
         courseUpdateReq.value.title = response.data.data.title;
         courseUpdateReq.value.content = response.data.data.content;
         courseUpdateReq.value.cityName = response.data.data.cityName;
-        courseUpdateReq.value.tripIds = response.data.data.relatedTripId;
+        courseUpdateReq.value.tripNames = Array.isArray(response.data.data.relatedTripNames)
+            ? response.data.data.relatedTripNames.join(',')
+            : response.data.data.relatedTripNames;
+        console.log(courseUpdateReq.value.tripNames)
       })
       .catch(error => {
         console.error('Error:', error);
@@ -49,8 +52,8 @@ export default {
     };
 
     const updateCourse = () => {
-      const tripIds = courseUpdateReq.value.tripIds.split(',').map(Number);
-      courseUpdateReq.value.tripIds = tripIds;
+      const tripNames = courseUpdateReq.value.tripNames.split(',').map(String);
+      courseUpdateReq.value.tripNames = tripNames;
       axios.put(`/api/v1/courses/${courseId}`, courseUpdateReq.value, {
         headers: {
           'Authorization': localStorage.getItem('Authorization')

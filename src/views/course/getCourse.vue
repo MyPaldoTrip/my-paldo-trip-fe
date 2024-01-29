@@ -60,7 +60,7 @@ export default {
       axios.get(`/api/v1/courses/${courseId}`)
       .then(response => {
         course.value = response.data.data;
-        fetchRelatedTrips(course.value.relatedTripId);
+        fetchRelatedTrips(course.value.relatedTripIds);
         console.log(response.data)
       })
       .catch(error => {

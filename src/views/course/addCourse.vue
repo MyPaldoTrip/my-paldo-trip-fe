@@ -11,7 +11,7 @@
     </div>
     <div class="mb-3">
       <label class="form-label">연관된 여행 정보</label>
-      <input v-model="relatedTripId" class="form-control" placeholder="" type="text">
+      <input v-model="relatedTripNames" class="form-control" placeholder="" type="text">
     </div>
     <div class="mb-3" @submit.prevent="submitForm">
       <label class="form-label">내용</label>
@@ -37,7 +37,7 @@ export default {
     const content = ref('');
     const cityName = ref('');
     const file = ref(null);
-    const relatedTripId = ref('');
+    const relatedTripNames = ref('');
 
     const handleFileUpload = event => {
       file.value = event.target.files[0];
@@ -49,7 +49,7 @@ export default {
         title: title.value,
         content: content.value,
         cityName: cityName.value,
-        tripIds: relatedTripId.value.split(',').map(Number)
+        tripNames: relatedTripNames.value.split(',').map(String)
       };
 
       const formData = new FormData();
@@ -61,7 +61,6 @@ export default {
           'Content-Type': 'multipart/form-data',
           'Authorization': localStorage.getItem('Authorization')
         }
-
       })
       .then(response => {
         console.log('Success:', response);
@@ -78,7 +77,7 @@ export default {
       title,
       content,
       cityName,
-      relatedTripId,
+      relatedTripNames,
       handleFileUpload,
       submitForm
     };

@@ -20,11 +20,14 @@
         <a class="list-group-item list-group-item-action list-group-item-info">댓글내용 :
           {{ comment.content }}</a>
       </div>
-      <button class="btn btn-outline-warning" type="button" @click="selectComment(comment)">수정
-      </button>
-      <button class="btn btn-outline-danger" type="button"
-              @click="deleteComment(comment.commentId)">삭제
-      </button>
+      <br>
+      <div v-if="comment.username === loginUsername">
+        <button class="btn btn-outline-warning" type="button" @click="selectComment(comment)">수정
+        </button>
+        <button class="btn btn-outline-danger" type="button"
+                @click="deleteComment(comment.commentId)">삭제
+        </button>
+      </div>
     </div>
 
   </div>
@@ -80,6 +83,7 @@ export default {
     const courseId = route.params.courseId;
     const newComment = ref({text: ''});
     const comments = ref([]);
+    const loginUsername = ref('');
     const selectedComment = ref(null);
     const Authorization = localStorage.getItem('Authorization');
     const page = ref(1);
@@ -164,10 +168,27 @@ export default {
             alert('권한이 없습니다');
           }
       );
-
     };
 
-    onMounted(getCommentList);
+    const fetchUserProfile = () => {
+      axios.get('/api/v1/users', {
+        headers: {
+          'Authorization': Authorization
+        }
+      })
+      .then(response => {
+        loginUsername.value = response.data.data.username;
+        console.log('profile', response.data.data)
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    };
+
+    onMounted(() => {
+      getCommentList();
+      fetchUserProfile();
+    });
 
     return {
       newComment,
@@ -177,6 +198,7 @@ export default {
       size,
       totalPages,
       searchReq,
+      loginUsername,
       selectComment,
       saveComment,
       getCommentList,
