@@ -40,6 +40,7 @@ export default {
         router.push('/')
       } catch (error) {
         console.error(error);
+        alert(error.response.data.message)
       }
     }
     const fetchUser = async () => {
@@ -66,18 +67,18 @@ export default {
 
 <template>
   <label>유저이름</label>
-  <input type="text" v-model="postData.username"/>
+  <input type="text" placeholder="필수(최대20자)" v-model="postData.username"/>
   <br>
   <label>소개</label>
-  <input type="text" v-model="postData.introduction"/>
+  <input type="text" placeholder="선택사항(최대40자)" v-model="postData.introduction"/>
   <br>
   <label>나이</label>
-  <input type="text" v-model="postData.age"/>
+  <input type="text" placeholder="선택사항(1~100)" v-model="postData.age"/>
   <br>
   <label>비밀번호</label>
-  <input type="text" v-model="postData.password"/>
+  <input type="text" placeholder="필수(최대20자)" v-model="postData.password"/>
   <br>
-  <input type="file" @change="uploadFile">
+  <input type="file" title="선택사항" @change="uploadFile">
   <br>
   <button @click="update">수정</button>
 </template>
