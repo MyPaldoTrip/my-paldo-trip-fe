@@ -4,8 +4,8 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://43.201.57.160:8080' //ec2 퍼블릭 주소, 배포용
-        // target: 'http://localhost:8080' //로컬호스트 기본 주소, 개발용
+        // target: 'http://43.201.132.6:8080' //ec2 퍼블릭 주소, 배포용
+        target: 'http://localhost:8080' //로컬호스트 기본 주소, 개발용
       }
     }
   }
