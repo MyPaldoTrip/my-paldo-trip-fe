@@ -11,7 +11,8 @@
   </label>
   <div>
     <div v-for="province in provinces" :key="province.provinceName">
-      <h3 @click="toggleCityList(province)">{{ province.provinceName }}</h3>
+      <h3 @click="toggleProvince(province)">{{ province.provinceName }}</h3>
+      <get-weather v-if="province.showWeather" :cityName="province.provinceName"></get-weather>
       <div v-if="province.showCityList">
         <div class="city-card" v-for="city in province.cityList" :key="city.cityId">
           <h4>
@@ -28,13 +29,14 @@
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import GetWeather from "@/views/weather/getWeather.vue";
 
 export default {
+  components: {GetWeather},
 
 
   setup() {
     const provinces = ref([]);
-
     const searchReq = ref({
       citySort: 'INITIAL'
     });
@@ -48,6 +50,7 @@ export default {
         provinces.value = response.data.data.map(city => ({
           provinceName: city.provinceName,
           showCityList: false,
+          showWeather: false,
           cityList: [] // 도시 목록을 담을 배열 추가
         }));
         console.log(searchReq);
@@ -77,9 +80,11 @@ export default {
         console.error('Error:', error);
       });
     };
-    const toggleCityList = (province) => {
+    const toggleProvince = (province) => {
       // 클릭한 province의 showCityList 값을 토글
       province.showCityList = !province.showCityList;
+      // 클릭한 province의 날씨 정보 토글
+      province.showWeather = !province.showWeather;
       if (province.showCityList) {
         // 클릭한 province의 도시 목록을 가져오기
         fetchCitiesByProvince(province);
@@ -92,9 +97,9 @@ export default {
       provinces,
       searchReq,
       fetchProvinces,
+      toggleProvince,
       fetchCitiesByProvince,
       handleChange,
-      toggleCityList
     };
   }
 };

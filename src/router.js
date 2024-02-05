@@ -36,6 +36,7 @@ import SingleCoursePage from "@/assemble/SingleCoursePage.vue";
 import RedirectPage from "@/views/user/RedirectPage.vue";
 import CourseUpdatePage from "@/assemble/CourseUpdatePage.vue";
 import getMyProfile from "@/views/user/getMyProfile.vue";
+import getWeather from "@/views/weather/getWeather.vue";
 
 
 const router = createRouter({
@@ -81,6 +82,7 @@ const router = createRouter({
     {path: "/getTripCourse/:cityName", component: getTripCourse},
     {path: "/kakao-login/oauth2/code", component: RedirectPage},
     {path: "/myProfile", component: getMyProfile},
+    {path: "/weather", component: getWeather},
   ]
 })
 
