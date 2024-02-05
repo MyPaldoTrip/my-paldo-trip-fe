@@ -41,4 +41,4 @@ jobs:
           username: ${{ secrets.MPT_USERNAME }}
           key: ${{ secrets.MPT_PRIVATE_KEY }}
           source: "dist/*"
-          target: "/home/ubuntu/mptfront/my-paldo-trip-fe/dist"
+          target: "/home/ubuntu/mptfront/my-paldo-trip-fe"
