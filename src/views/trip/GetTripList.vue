@@ -29,7 +29,7 @@
     </div>
 
     <div class="card-container" v-if="vueState.tripList">
-      <div class="card" v-for="(trip, index) in vueState.tripList.data" :key="index" @click="goToGetTrip(trip.tripId)">
+      <div class="card" v-for="(trip, index) in vueState.tripList" :key="index" @click="goToGetTrip(trip.tripId)">
         <img :src="getImageUrl(trip.fileUrlList)" alt="Default image" class="card-img">
         <div class="card-body">
           <h5 class="card-title">{{ trip.name }}</h5>
@@ -95,8 +95,9 @@ export default {
           "category": vueState.selectedCategory || null,
           "tripSort": vueState.selectedTripSort || null,
           "page": 0,
+          "size": 20
         });
-        vueState.tripList = response.data;
+        vueState.tripList = response.data.data.tripListRes;
       } catch (error) {
         vueState.error = '여행 정보를 불러오는데 실패했습니다.';
         console.error('There was an error fetching the trips:', error);

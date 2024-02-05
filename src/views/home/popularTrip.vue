@@ -67,8 +67,10 @@ export default {
           "category": null,
           "tripSort": 'RATING',
           "page": 0,
+          "size" : 14
         });
-        vueState.tripList = response.data;
+        vueState.tripList = response.data.data.tripListRes;
+        console.log('tripRes',response)
       } catch (error) {
         vueState.error = '여행 정보를 불러오는데 실패했습니다.';
         console.error('There was an error fetching the trips:', error);

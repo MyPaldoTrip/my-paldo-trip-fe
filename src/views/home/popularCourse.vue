@@ -56,7 +56,7 @@ export default {
         }, headers: {Authorization: localStorage.getItem('Authorization')}
       })
       .then(response => {
-        courses.value = response.data.data;
+        courses.value = response.data.data.courseListResList;
       })
       .catch(error => {
         console.error('Error:', error);

@@ -116,8 +116,8 @@ export default {
         }, headers: {Authorization: localStorage.getItem('Authorization')}
       })
       .then(response => {
-        courses.value = response.data.data;
-        totalPages.value = response.data.data[0].totalPage;
+        courses.value = response.data.data.courseListResList;
+        totalPages.value = response.data.data.courseListResList[0].totalPage;
       })
       .catch(error => {
         console.error('Error:', error);
