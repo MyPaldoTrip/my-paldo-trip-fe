@@ -3,7 +3,9 @@
     <div class="row row-cols-1 row-cols-md-4 g-4">
       <div v-for="course in courses" :key="course.id" class="col">
         <div class="card">
-          <img :src="course.thumbnailUrl" alt="" class="card-img-top">
+          <router-link :to="`/courses/${course.courseId}/test`">
+           <img :src="course.thumbnailUrl" alt="" class="card-img-top">
+          </router-link>
           <div class="card-body">
             <h5 class="card-title">{{ course.title }}</h5>
           </div>
@@ -27,9 +29,6 @@
             <li class="list-group-item">작성자 : {{ course.username }}(lv{{ 0 + course.level }})</li>
             <li class="list-group-item">작성일 - {{ course.createdAt.substring(0, 10) }}</li>
           </ul>
-          <div class="card-body">
-            <router-link :to="`/courses/${course.courseId}/test`">바로 가기</router-link>
-          </div>
         </div>
       </div>
     </div>
@@ -117,8 +116,8 @@ export default {
         }, headers: {Authorization: localStorage.getItem('Authorization')}
       })
       .then(response => {
-        courses.value = response.data.data;
-        totalPages.value = response.data.data[0].totalPage;
+        courses.value = response.data.data.courseListResList;
+        totalPages.value = response.data.data.courseListResList[0].totalPage;
       })
       .catch(error => {
         console.error('Error:', error);
@@ -175,6 +174,12 @@ select.form-select {
 
 .cards {
   margin: 100px 10% 30px 10%;
+}
+.col {
+  height : 600px;
+}
+.card-img-top {
+  height: 400px;
 }
 
 </style>
