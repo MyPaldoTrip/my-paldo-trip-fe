@@ -2,7 +2,7 @@
   <div style="background-color: beige">
     <h1 style="background-color: wheat">별점 높은 여행 정보</h1>
     <div class="card-container" v-if="vueState.tripList">
-      <div class="card" v-for="(trip, index) in vueState.tripList.data" :key="index"
+      <div class="card" v-for="(trip, index) in vueState.tripList" :key="index"
            @click="goToGetTrip(trip.tripId)">
         <img :src="getImageUrl(trip.fileUrlList)" alt="Default image" class="card-img">
         <div class="card-body">
