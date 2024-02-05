@@ -18,19 +18,27 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 17
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
       # Runs ssh deploy for CI, CD
-      - name: executing remote ssh commands using password
+      - name: Deploy to EC2
         if: github.event_name == 'pull_request'
-        uses: appleboy/ssh-action@master
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.MPT_HOST }}
           username: ${{ secrets.MPT_USERNAME }}
           key: ${{ secrets.MPT_PRIVATE_KEY }}
-          # port: ${{ secrets.PORT }} # default : 22
-          script: |
-            cd ${{ secrets.MPT_WEB_PATH }} && git pull
-            source ~/.nvm/nvm.sh
-            nvm use 17.0.0
-            npm install
-            npm run build
+          source: "dist/*"
+          target: "/home/ubuntu/mptfront/my-paldo-trip-fe/dist"
