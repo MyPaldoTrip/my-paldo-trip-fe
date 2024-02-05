@@ -3,7 +3,9 @@
     <h1 style="background-color: wheat">인기 코스</h1>
     <div v-for="course in courses" :key="course.id" class="col">
       <b-card>
-        <b-card-img :src="course.thumbnailUrl" alt="" class="card-img-top"/>
+        <router-link :to="`/courses/${course.courseId}/test`">
+          <b-card-img :src="course.thumbnailUrl" alt="" class="card-img-top"/>
+        </router-link>
         <b-card-body class="card-body">
           <b-card-title>{{ course.title }}</b-card-title>
         </b-card-body>
@@ -27,9 +29,6 @@
           <li class="list-group-item">작성자 : {{ course.username }}(lv{{ 0 + course.level }})</li>
           <li class="list-group-item">작성일 - {{ course.createdAt.substring(0, 10) }}</li>
         </ul>
-        <div class="card-body">
-          <router-link :to="`/courses/${course.courseId}/test`">바로 가기</router-link>
-        </div>
       </b-card>
     </div>
   </b-row>
@@ -72,5 +71,12 @@ export default {
 }
 </script>
 <style scoped>
+.col {
+  height : 600px;
+  margin : auto;
 
+}
+.card-img-top {
+  height: 350px;
+}
 </style>
