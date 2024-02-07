@@ -108,9 +108,9 @@ export default {
         headers: {'Authorization': Authorization}
       })
       .then(response => {
-        console.log('Comment Saved:', response.data.data);
-        console.log('newComment.value:', newComment.value);
-        console.log('comments.value:', comments.value);
+        // console.log('Comment Saved:', response.data.data);
+        // console.log('newComment.value:', newComment.value);
+        // console.log('comments.value:', comments.value);
 
         comments.value.push(response.data.data);
         newComment.value.comment = '';
@@ -129,7 +129,7 @@ export default {
             headers: {'Authorization': Authorization}
           })
       .then(response => {
-        console.log('Comments:', response.data.data);
+        // console.log('Comments:', response.data.data);
         comments.value = response.data.data;
         totalPages.value = response.data.data[0].totalPage;
       })
@@ -178,7 +178,7 @@ export default {
       })
       .then(response => {
         loginUsername.value = response.data.data.username;
-        console.log('profile', response.data.data)
+        // console.log('profile', response.data.data)
       })
       .catch(error => {
         console.error('Error:', error);
