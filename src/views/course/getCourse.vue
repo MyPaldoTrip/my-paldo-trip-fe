@@ -185,6 +185,7 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
   margin: auto 15% auto 15%;
+  height: 400px;
 }
 
 .card {
