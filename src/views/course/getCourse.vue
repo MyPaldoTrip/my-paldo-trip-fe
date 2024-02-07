@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div v-if="course.username === username" class="courseControl">
+    <div v-if="course.username === username || userRole !== 'ROLE_USER'" class="courseControl">
       <button class="btn btn-outline-warning" type="button"
               @click="router().push(`/courses/${course.courseId}/update`)">
         코스 수정
@@ -54,6 +54,7 @@ export default {
     const course = ref(null);
     const relatedTrips = ref([]);
     const username = ref(null);
+    const userRole = ref(null);
     const Authorization = localStorage.getItem('Authorization')
 
     const fetchCourse = () => {
@@ -88,7 +89,7 @@ export default {
       })
       .then(response => {
         username.value = response.data.data.username;
-        console.log('profile', response.data.data)
+        userRole.value = response.data.data.userRole;
       })
       .catch(error => {
         console.error('Error:', error);
@@ -121,6 +122,7 @@ export default {
       deleteCourse,
       course,
       username,
+      userRole,
       relatedTrips
     };
   }
