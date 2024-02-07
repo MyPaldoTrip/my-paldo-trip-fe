@@ -62,7 +62,7 @@ export default {
       .then(response => {
         course.value = response.data.data;
         fetchRelatedTrips(course.value.relatedTripIds);
-        console.log(response.data)
+        // console.log(response.data)
       })
       .catch(error => {
         console.error('Error:', error);
@@ -74,7 +74,7 @@ export default {
         axios.get(`/api/v1/trips/${tripId}`)
         .then(response => {
           relatedTrips.value.push(response.data.data);
-          console.log(response.data.data)
+          // console.log(response.data.data)
         })
         .catch(error => {
           console.error('Error:', error);
@@ -90,6 +90,7 @@ export default {
       .then(response => {
         username.value = response.data.data.username;
         userRole.value = response.data.data.userRole;
+        // console.log('profile', response.data)
       })
       .catch(error => {
         console.error('Error:', error);

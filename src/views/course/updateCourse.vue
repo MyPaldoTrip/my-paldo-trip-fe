@@ -44,7 +44,7 @@ export default {
         courseUpdateReq.value.tripNames = Array.isArray(response.data.data.relatedTripNames)
             ? response.data.data.relatedTripNames.join(',')
             : response.data.data.relatedTripNames;
-        console.log(courseUpdateReq.value.tripNames)
+        // console.log(courseUpdateReq.value.tripNames)
       })
       .catch(error => {
         console.error('Error:', error);
